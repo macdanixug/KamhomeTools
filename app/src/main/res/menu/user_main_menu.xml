@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_shopdrug"
+            android:icon="@drawable/home"
+            android:title="Shop Drug"/>
+        <item
+            android:id="@+id/nav_prescription"
+            android:icon="@drawable/home"
+            android:title="View Prescription"/>
+        <item
+            android:id="@+id/nav_appointment"
+            android:icon="@drawable/home"
+            android:title="Make Appointmnent"/>
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/home"
+            android:title="Chat With Us"/>
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/home"
+            android:title="Profile"/>
+    </group>
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/home"
+                android:title="Logout"/>
+            <item
+                android:id="@+id/about_developer"
+                android:icon="@drawable/home"
+                android:title="About developer"/>
+        </menu>
+    </item>
+</menu>

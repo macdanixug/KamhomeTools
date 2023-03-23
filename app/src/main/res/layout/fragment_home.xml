@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".AboutDeveloper">
+    tools:context=".HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             <Button
                 android:id="@+id/project1"
                 android:layout_width="200dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button"
                 android:text="Kamhome Pharmacy"
                 android:textSize="16sp"
@@ -116,7 +116,7 @@
             <Button
                 android:id="@+id/project2"
                 android:layout_width="200dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@drawable/rounded_button"
                 android:text="Kamhome Hostels"
@@ -126,7 +126,7 @@
             <Button
                 android:id="@+id/project3"
                 android:layout_width="200dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button"
                 android:text="Kamhome Hardware"
                 android:textSize="16sp"
@@ -145,6 +145,7 @@
             android:textColor="@color/maroon"
             android:drawablePadding="2dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginStart="16dp"/>
