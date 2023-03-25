@@ -6,17 +6,13 @@
     <group
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_shopdrug"
+            android:id="@+id/view_pdt"
             android:icon="@drawable/home"
-            android:title="Shop Drug"/>
+            android:title="View Products"/>
         <item
-            android:id="@+id/nav_prescription"
+            android:id="@+id/order"
             android:icon="@drawable/home"
-            android:title="View Prescription"/>
-        <item
-            android:id="@+id/nav_appointment"
-            android:icon="@drawable/home"
-            android:title="Make Appointmnent"/>
+            android:title="Order"/>
         <item
             android:id="@+id/nav_chat"
             android:icon="@drawable/home"

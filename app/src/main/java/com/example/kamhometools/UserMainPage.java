@@ -39,14 +39,17 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_shopdrug);
+            navigationView.setCheckedItem(R.id.view_pdt);
         }
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_shopdrug:
+            case R.id.view_pdt:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                break;
+            case R.id.about_developer:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutDeveloperFragment()).commit();
                 break;
             case R.id.nav_logout:
                 Intent intent = new Intent(UserMainPage.this,MainActivity.class);
