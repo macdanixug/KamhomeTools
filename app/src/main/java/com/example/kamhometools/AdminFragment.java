@@ -45,7 +45,7 @@ public class AdminFragment extends Fragment {
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private TextInputEditText productname, product_description, priceCatalog;
-    private DatabaseReference root;
+    private DatabaseReference   root = FirebaseDatabase.getInstance().getReference("PostProducts");
     public static final int RESULT_OK = -1;
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
 
@@ -62,7 +62,7 @@ public class AdminFragment extends Fragment {
         image2 = view.findViewById(R.id.image2);
         image3 = view.findViewById(R.id.image3);
         mAuth = FirebaseAuth.getInstance();
-        root = FirebaseDatabase.getInstance().getReference("PostProducts");
+
         currentUser = mAuth.getCurrentUser();
         image1.setOnClickListener(v -> chooseimg());
         productname = view.findViewById(R.id.productname);
@@ -147,15 +147,14 @@ public class AdminFragment extends Fragment {
                         public void onSuccess(Uri uri) {
                             String modelId = root.push().getKey();
 
-
-                            PostProducts model = new PostProducts(productname.getText().toString(), product_description.getText().toString(), priceCatalog.getText().toString(), uri);
+                            PostProducts model = new PostProducts(productname.getText().toString(), product_description.getText().toString(), priceCatalog.getText().toString(), uri.toString());
                             root.child(modelId).setValue(model);
                             progressDialog.dismiss();
                             productname.getText().clear();
                             product_description.getText().clear();
                             priceCatalog.getText().clear();
                             image1.setImageResource(0);product_description.getText().toString();
-                            Toast.makeText(getActivity(), "PLEASE WAIT WHILE WE VERIFY YOUR CONTENT", Toast.LENGTH_LONG)
+                            Toast.makeText(getActivity(), "Upload Sucessful", Toast.LENGTH_LONG)
                                     .show();
                         }
                     });

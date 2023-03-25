@@ -21,7 +21,6 @@
             android:gravity="center_horizontal"
             android:layout_marginTop="20dp"/>
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,17 +30,18 @@
             app:helperTextEnabled="true"
             app:boxBackgroundMode="outline"
             app:helperText="Product Name"
-            app:helperTextTextColor="@color/maroon">
-
-
+            app:helperTextTextColor="@color/maroon"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/productname"
                 android:textColor="@color/maroon"
-                android:background="@drawable/edit_text_background"/>
-
-
+                android:drawableLeft="@drawable/product_name" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -50,43 +50,44 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:hint="Product Description"
+            app:hintTextColor="@color/maroon"
             app:helperTextEnabled="true"
-            android:textColorHint="@color/maroon"
             app:boxBackgroundMode="outline"
             app:helperText="Product Description"
-            app:helperTextTextColor="@color/maroon">
-
+            app:helperTextTextColor="@color/maroon"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:drawablePadding="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/product_description"
                 android:textColor="@color/maroon"
-                android:background="@drawable/edit_text_background"/>
-
-
+                android:drawableLeft="@drawable/description"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Price Catalogs"
-            app:helperTextEnabled="true"
+            android:hint="Price Catalog"
             app:hintTextColor="@color/maroon"
+            app:helperTextEnabled="true"
             app:boxBackgroundMode="outline"
-            app:helperText="Price Catalogs"
-            app:helperTextTextColor="@color/maroon">
-
-
+            app:helperText="Price Catalog"
+            app:helperTextTextColor="@color/maroon"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginTop="40dp"
+            android:padding="8dp"
+            android:drawablePadding="8dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/priceCatalog"
                 android:textColor="@color/maroon"
-                android:background="@drawable/edit_text_background"/>
-
-
+                android:drawableLeft="@drawable/price"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -95,7 +96,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="10dp"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:layout_marginTop="40dp"
+            android:padding="8dp">
 
         <LinearLayout
             android:layout_width="0dp"
