@@ -7,31 +7,39 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/view_pdt"
-            android:icon="@drawable/home"
+            android:icon="@drawable/view_pdts"
             android:title="View Products"/>
         <item
-            android:id="@+id/order"
-            android:icon="@drawable/home"
-            android:title="Order"/>
-        <item
             android:id="@+id/nav_chat"
-            android:icon="@drawable/home"
+            android:icon="@drawable/message"
             android:title="Chat With Us"/>
         <item
+            android:id="@+id/blogs"
+            android:icon="@drawable/blogs"
+            android:title="Our Blogs"/>
+        <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/home"
+            android:icon="@drawable/profile"
             android:title="Profile"/>
+        <item
+            android:id="@+id/signup"
+            android:icon="@drawable/signup"
+            android:title="Signup"/>
     </group>
     <item
         android:title="">
         <menu>
             <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/login"
+                android:title="Login"/>
+            <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/home"
+                android:icon="@drawable/logout"
                 android:title="Logout"/>
             <item
                 android:id="@+id/about_developer"
-                android:icon="@drawable/home"
+                android:icon="@drawable/profile"
                 android:title="About developer"/>
         </menu>
     </item>

@@ -28,7 +28,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.fragment_home, parent, false);
+                inflate(R.layout.design, parent, false);
         return new myViewHolder(v);
     }
 
@@ -36,8 +36,8 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         PostProducts model= list.get(position);
         holder.productName.setText(model.getProductName());
-        holder.productDescription.setText(model.getProductDescription());
-        holder.priceCatalog.setText(model.getPriceCatalog());
+//        holder.productDescription.setText(model.getProductDescription());
+        holder.priceCatalog.setText("UGX "+model.getPriceCatalog());
         String imageUri;
         imageUri=model.getImageUri();
         Picasso.get().load(imageUri).into(holder.image1);
@@ -57,7 +57,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             productName=itemView.findViewById(R.id.productname);
-            productDescription=itemView.findViewById(R.id.product_description);
+//            productDescription=itemView.findViewById(R.id.product_description);
             priceCatalog=itemView.findViewById(R.id.priceCatalog);
             image1=itemView.findViewById(R.id.image1);
 

@@ -34,14 +34,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="20dp"
             android:padding="8dp"
-            android:drawablePadding="8dp"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/productname"
                 android:textColor="@color/maroon"
-                android:drawableLeft="@drawable/product_name" />
+                android:drawableLeft="@drawable/product_name"
+                android:drawablePadding="10dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -57,15 +57,15 @@
             app:helperTextTextColor="@color/maroon"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="20dp"
-            android:padding="8dp"
-            android:drawablePadding="8dp">
+            android:padding="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/product_description"
                 android:textColor="@color/maroon"
-                android:drawableLeft="@drawable/description"/>
+                android:drawableLeft="@drawable/message"
+                android:drawablePadding="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -80,14 +80,15 @@
             app:helperTextTextColor="@color/maroon"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="40dp"
-            android:padding="8dp"
-            android:drawablePadding="8dp">
+            android:padding="8dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/priceCatalog"
                 android:textColor="@color/maroon"
-                android:drawableLeft="@drawable/price"/>
+                android:drawableLeft="@drawable/price"
+                android:drawablePadding="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="150dp"
     android:elevation="4dp"
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
@@ -13,37 +13,42 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/img1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:id="@+id/image1"
+            android:layout_width="100dp"
+            android:layout_height="130dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="10dp"
             android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/t1"
+        <Button
+            android:id="@+id/productname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@id/img1"
-            android:gravity="center_vertical"
-            android:text="This is header text"
-            android:textColor="#000"
-            android:textSize="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/image1"
+            android:paddingLeft="2dp"
+            android:text="Product Name"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/maroon"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/t2"
+            android:id="@+id/priceCatalog"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/t1"
-            android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@id/img1"
-            android:gravity="center_vertical"
-            android:text="This is Description text"
-            android:textColor="#000"
+            android:layout_height="50dp"
+            android:layout_below="@+id/productname"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/image1"
+            android:paddingLeft="2dp"
+            android:text="Price"
+            android:textColor="@color/orange"
             android:textSize="20dp"
             android:textStyle="bold" />
 

@@ -7,11 +7,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/post_drugs"
-            android:icon="@drawable/home"
+            android:icon="@drawable/view_pdts"
             android:title="Post Products"/>
         <item
             android:id="@+id/post_news"
-            android:icon="@drawable/home"
+            android:icon="@drawable/blogs"
             android:title="Post News"/>
     </group>
     <item
@@ -19,7 +19,7 @@
         <menu>
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/home"
+                android:icon="@drawable/logout"
                 android:title="Logout"/>
         </menu>
     </item>
