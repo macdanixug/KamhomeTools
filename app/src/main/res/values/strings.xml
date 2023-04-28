@@ -2,6 +2,9 @@
     <string name="app_name">Kamhome Tools</string>
     <string name="open_menu">open</string>
     <string name="close_menu">close</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login_title1">Welcome back!</string>
+    <string name="login_title2">Enter your credentials to continue</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="account">Create an account</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

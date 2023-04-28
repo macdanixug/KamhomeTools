@@ -54,7 +54,7 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlogsFragment()).commit();
                 break;
             case R.id.nav_profile:
-                Toast.makeText(this, "Profile Fragment", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
                 break;
             case R.id.signup:
                 Intent intent = new Intent(UserMainPage.this,Signup.class);
@@ -65,9 +65,13 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutDeveloperFragment()).commit();
                 break;
             case R.id.nav_login:
-            case R.id.nav_logout:
-                Intent intent1 = new Intent(UserMainPage.this,MainActivity.class);
+                Intent intent1 = new Intent(UserMainPage.this,Login.class);
                 startActivity(intent1);
+                finish();
+                break;
+            case R.id.nav_logout:
+                Intent intent2 = new Intent(UserMainPage.this,MainActivity.class);
+                startActivity(intent2);
                 finish();
                 break;
         }

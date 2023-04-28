@@ -99,19 +99,6 @@
 
             </LinearLayout>
 
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/signup_username"
-                android:background="@drawable/custom_edittext"
-                android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:hint="Username"
-                android:drawableLeft="@drawable/username"
-                android:drawablePadding="10dp"
-                android:textColor="@color/maroon"/>
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -134,7 +121,7 @@
                 android:layout_marginTop="30dp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:backgroundTint="@color/dark_blue"
+                android:backgroundTint="@color/maroon"
                 app:cornerRadius = "20dp"/>
 
             <TextView
@@ -145,14 +132,14 @@
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/maroon"
                 android:textSize="18sp"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:indeterminateTint="@color/black"
+                android:indeterminateTint="@color/maroon"
                 android:visibility="invisible"
                 />
 

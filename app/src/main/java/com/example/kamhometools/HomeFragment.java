@@ -48,15 +48,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
-//                List<PostProducts> dataList = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Toast.makeText(getActivity(), "Products Loading Please Wait", Toast.LENGTH_LONG).show();
                     PostProducts object = snapshot.getValue(PostProducts.class);
                     list.add(object);
                 }
 
-                productAdapter adapter = new productAdapter(getActivity(),list);
+                productAdapter adapter = new productAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener(new productAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(PostProducts item) {
+                        Toast.makeText(getActivity(), "You clicked on " + item.getProductName(), Toast.LENGTH_SHORT).show();
+                    }
+
+                });
 
             }
 
@@ -69,4 +74,5 @@ public class HomeFragment extends Fragment {
 
         return  view;
     }
+
 }

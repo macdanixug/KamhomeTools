@@ -2,10 +2,12 @@ package com.example.kamhometools;
 
 public class HelperClass {
 
-   private String name;
-   private String email;
-   private String contact;
-   private String username;
+    private String name;
+    private String email;
+    private String contact;
+    private String password;
+    private String imageUrl;
+    private String role;
 
     public String getName() {
         return name;
@@ -31,14 +33,6 @@ public class HelperClass {
         this.contact = contact;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -55,17 +49,23 @@ public class HelperClass {
         this.imageUrl = imageUrl;
     }
 
-    public HelperClass(String name, String email, String contact, String username, String password, String imageUrl) {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public HelperClass() {
+    }
+
+    public HelperClass(String name, String email, String contact, String password, String imageUrl, String role) {
         this.name = name;
         this.email = email;
         this.contact = contact;
-        this.username = username;
         this.password = password;
         this.imageUrl = imageUrl;
-    }
-
-    private String password;
-   private String imageUrl;
-    public HelperClass() {
+        this.role = role;
     }
 }

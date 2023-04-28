@@ -23,7 +23,7 @@
             android:name=".Signup"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".AdminMainPage"
@@ -32,7 +32,7 @@
             android:name=".UserMainPage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:exported="true"
             android:theme="@style/Theme.KamhomeTools">
             <intent-filter>

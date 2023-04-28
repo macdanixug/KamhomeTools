@@ -19,8 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +35,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class Signup extends AppCompatActivity {
 
-    EditText signupName, signupUsername, signupEmail, signupPassword, signupContact;
+    EditText signupName, signupEmail, signupPassword, signupContact;
     ImageView image;
     TextView loginRedirectText;
     Button signupButton;
@@ -57,14 +60,18 @@ public class Signup extends AppCompatActivity {
 
         signupName = findViewById(R.id.signup_name);
         signupEmail = findViewById(R.id.signup_email);
-        signupUsername = findViewById(R.id.signup_username);
         signupContact = findViewById(R.id.signup_contact);
         signupPassword = findViewById(R.id.signup_password);
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
         image = findViewById(R.id.image);
         progressBar = findViewById(R.id.progressBar);
+        progressDialog = new ProgressDialog(this);
         progressBar.setVisibility(View.INVISIBLE);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        image.setOnClickListener(v -> chooseimg());
 
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +112,6 @@ public class Signup extends AppCompatActivity {
             String uName = signupName.getText().toString().trim();
             String uEmail = signupEmail.getText().toString().trim();
             String uContact = signupContact.getText().toString().trim();
-            String uUsername = signupUsername.getText().toString().trim();
             String uPassword = signupPassword.getText().toString().trim();
 
             if (uName.isEmpty()) {
@@ -121,11 +127,6 @@ public class Signup extends AppCompatActivity {
             if (uContact.isEmpty()) {
                 signupContact.setError("Contact is required");
                 signupContact.requestFocus();
-                return;
-            }
-            if (uUsername.isEmpty()) {
-                signupUsername.setError("Username is required");
-                signupUsername.requestFocus();
                 return;
             }
             if (uPassword.isEmpty()) {
@@ -145,43 +146,66 @@ public class Signup extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         final StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+        String userEmail = signupEmail.getText().toString().trim();
+        String userPassword = signupPassword.getText().toString().trim();
+
+        mAuth.createUserWithEmailAndPassword(userEmail,userPassword)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+                fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(Uri uri) {
-                        String modelId = root.push().getKey();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
-                        HelperClass model = new HelperClass(signupName.getText().toString(), signupEmail.getText().toString(), signupContact.getText().toString(), signupUsername.getText().toString(), signupPassword.getText().toString(), uri.toString());
-                        root.child(modelId).setValue(model);
-                        progressDialog.dismiss();
+                                String uName = signupName.getText().toString().trim();
+//                                String uEmail = signupEmail.getText().toString().trim();
+                                String uContact = signupContact.getText().toString().trim();
+                                String Role = "user";
 
-                        signupName.getText().clear();
-                        signupContact.getText().clear();
-                        signupEmail.getText().clear();
-                        signupUsername.getText().clear();
-                        signupPassword.getText().clear();
-                        image.setImageResource(0);
+                                HelperClass model = new HelperClass(uName, userEmail, uContact,uri.toString(), userPassword,Role);
+                                // Generate a unique key for the user registration in the Realtime Database
+                                String userId = root.push().getKey();
+                                root.child(userId).setValue(model);
+                                progressDialog.dismiss();
+
+                                signupName.getText().clear();
+                                signupContact.getText().clear();
+                                signupEmail.getText().clear();
+                                signupPassword.getText().clear();
+                                image.setImageResource(0);
 
 //                        blog_message.getText().toString();
-                        Toast.makeText(Signup.this, "Signup Succesfull", Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(Signup.this, "Signup Succesfull", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        progressDialog.show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(Signup.this, "Signup Failed Failed", Toast.LENGTH_LONG).show();
+
                     }
                 });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressDialog.show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(Signup.this, "Blog Upload Failed", Toast.LENGTH_LONG).show();
+
 
             }
         });
+
+
+
 
     }
     private String getFileExtension (Uri mUri){
