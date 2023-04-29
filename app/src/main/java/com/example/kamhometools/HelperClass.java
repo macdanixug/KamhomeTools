@@ -41,14 +41,6 @@ public class HelperClass {
         this.password = password;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public String getRole() {
         return role;
     }
@@ -57,15 +49,11 @@ public class HelperClass {
         this.role = role;
     }
 
-    public HelperClass() {
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public HelperClass(String name, String email, String contact, String password, String imageUrl, String role) {
-        this.name = name;
-        this.email = email;
-        this.contact = contact;
-        this.password = password;
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-        this.role = role;
     }
 }

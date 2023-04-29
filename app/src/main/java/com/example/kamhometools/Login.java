@@ -23,8 +23,8 @@ public class Login extends AppCompatActivity {
     EditText loginEmail, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
-
     private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,11 @@ public class Login extends AppCompatActivity {
         loginPassword = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
         signupRedirectText = findViewById(R.id.signupRedirectText);
+
+
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +67,11 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if(task.isSuccessful()){
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                String myUserId = user.getUid();
-                                Toast.makeText(Login.this,myUserId, Toast.LENGTH_SHORT).show();
 
-                                if (myUserId.equals("ffgEZLJpW4OJVT5dwKywq2hi6bK2")) {
+                                String myUserId = currentUser.getUid();
+//                                Toast.makeText(Login.this,myUserId, Toast.LENGTH_SHORT).show();
+
+                                if (myUserId.equals("iXRwo2JM97V11lDuW49YvZv0Fbh2")) {
                                     //grant access to database
                                     Toast.makeText(Login.this, "Admin Logged in Successful", Toast.LENGTH_SHORT).show();
                                     Intent dash=new Intent(Login.this, AdminMainPage.class);

@@ -45,20 +45,20 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         PostProducts model = list.get(position);
         holder.productName.setText(model.getProductName());
-        holder.productDescription.setText(model.getProductDescription());
+//        holder.productDescription.setText(model.getProductDescription());
         holder.priceCatalog.setText("UGX " + model.getPriceCatalog());
         String imageUri;
         imageUri = model.getImageUri();
         Picasso.get().load(imageUri).into(holder.image1);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onItemClick(model);
-                }
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                if (mListener != null) {
+////                    mListener.onItemClick(model);
+////                }
+////            }
+////        });
     }
 
     @Override

@@ -154,8 +154,6 @@ public class Signup extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
-
                 fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -164,11 +162,10 @@ public class Signup extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
 
                                 String uName = signupName.getText().toString().trim();
-//                                String uEmail = signupEmail.getText().toString().trim();
                                 String uContact = signupContact.getText().toString().trim();
-                                String Role = "user";
+                                String Role = "User";
 
-                                HelperClass model = new HelperClass(uName, userEmail, uContact,uri.toString(), userPassword,Role);
+                                HelperClass model = new HelperClass(uName, userEmail, uContact, userPassword,Role,uri.toString());
                                 // Generate a unique key for the user registration in the Realtime Database
                                 String userId = root.push().getKey();
                                 root.child(userId).setValue(model);
