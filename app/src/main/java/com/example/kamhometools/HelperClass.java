@@ -6,8 +6,21 @@ public class HelperClass {
     private String email;
     private String contact;
     private String password;
-    private String imageUrl;
     private String role;
+    private String imageUrl;
+
+    public HelperClass() {
+
+    }
+
+    public HelperClass(String name, String email, String contact, String password, String role, String imageUrl) {
+        this.name = name;
+        this.email = email;
+        this.contact = contact;
+        this.password = password;
+        this.role = role;
+        this.imageUrl = imageUrl;
+    }
 
     public String getName() {
         return name;

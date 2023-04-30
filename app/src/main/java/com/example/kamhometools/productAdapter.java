@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -45,20 +46,18 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         PostProducts model = list.get(position);
         holder.productName.setText(model.getProductName());
-//        holder.productDescription.setText(model.getProductDescription());
         holder.priceCatalog.setText("UGX " + model.getPriceCatalog());
         String imageUri;
         imageUri = model.getImageUri();
         Picasso.get().load(imageUri).into(holder.image1);
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v) {
-////                if (mListener != null) {
-////                    mListener.onItemClick(model);
-////                }
-////            }
-////        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductDetailFragment(model.getProductName(),model.getPriceCatalog(),model.getProductDescription(),model.getImageUri())).addToBackStack(null).commit();
+            }
+        });
     }
 
     @Override
@@ -68,7 +67,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
 
     public static class myViewHolder extends RecyclerView.ViewHolder {
         TextView productName, productDescription, priceCatalog;
-        ImageView image1;
+        ImageView image1,image2,image3;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,6 +75,9 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
             productDescription = itemView.findViewById(R.id.product_description);
             priceCatalog = itemView.findViewById(R.id.priceCatalog);
             image1 = itemView.findViewById(R.id.image1);
+            image2 = itemView.findViewById(R.id.image2);
+            image3 = itemView.findViewById(R.id.image3);
+
         }
     }
 }

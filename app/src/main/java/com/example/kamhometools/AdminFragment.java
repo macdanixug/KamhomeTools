@@ -126,48 +126,48 @@ public class AdminFragment extends Fragment {
     }
 
     private void UploadToFirebase (Uri uri){
-       // if (currentUser != null) {
+        // if (currentUser != null) {
 //            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 //                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            progressDialog.setTitle("UPLOADING .. .. ..");
-            progressDialog.setMessage("Please wait....");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-            final StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-            fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            String modelId = root.push().getKey();
+        progressDialog.setTitle("UPLOADING .. .. ..");
+        progressDialog.setMessage("Please wait....");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        final StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String modelId = root.push().getKey();
 
-                            PostProducts model = new PostProducts(productname.getText().toString(), product_description.getText().toString(), priceCatalog.getText().toString(), uri.toString());
-                            root.child(modelId).setValue(model);
-                            progressDialog.dismiss();
-                            productname.getText().clear();
-                            product_description.getText().clear();
-                            priceCatalog.getText().clear();
-                            image1.setImageResource(0);product_description.getText().toString();
-                            Toast.makeText(getActivity(), "Upload Sucessful", Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    progressDialog.show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Upload Failed", Toast.LENGTH_LONG)
-                            .show();
+                        PostProducts model = new PostProducts(productname.getText().toString(), product_description.getText().toString(), priceCatalog.getText().toString(), uri.toString());
+                        root.child(modelId).setValue(model);
+                        progressDialog.dismiss();
+                        productname.getText().clear();
+                        product_description.getText().clear();
+                        priceCatalog.getText().clear();
+                        image1.setImageResource(0);product_description.getText().toString();
+                        Toast.makeText(getActivity(), "Upload Sucessful", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                progressDialog.show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Upload Failed", Toast.LENGTH_LONG)
+                        .show();
 
-                }
-            });
+            }
+        });
 
     }
     private String getFileExtension (Uri mUri){

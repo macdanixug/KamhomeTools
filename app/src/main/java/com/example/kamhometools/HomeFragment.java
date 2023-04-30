@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -35,7 +34,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view= inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView= view.findViewById(R.id.recview);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -55,13 +54,6 @@ public class HomeFragment extends Fragment {
 
                 productAdapter adapter = new productAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
-                adapter.setOnItemClickListener(new productAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(PostProducts item) {
-                        Toast.makeText(getActivity(), "You clicked on " + item.getProductName(), Toast.LENGTH_SHORT).show();
-                    }
-
-                });
 
             }
 

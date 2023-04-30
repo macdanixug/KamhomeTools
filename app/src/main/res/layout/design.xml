@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:elevation="4dp"
+    android:id="@+id/wrapper"
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
 
