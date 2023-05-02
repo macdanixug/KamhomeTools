@@ -8,232 +8,99 @@
     android:background="@color/white"
     tools:context=".ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp">
+
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/profileImg"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/dp"
-            android:background="@drawable/image_circle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/dp"/>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="22dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/titleName"
-            android:layout_marginTop="10dp"
-            android:text="Name"
-            android:textColor="@color/maroon"
-            android:textSize="20sp"
+            android:text="Full Name: "
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/profileImg"
-            app:layout_constraintStart_toStartOf="@id/profileImg"
-            app:layout_constraintTop_toBottomOf="@id/profileImg"/>
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/titleUsername"
-            android:text="Email"
-            android:textColor="@color/maroon"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@id/titleName"
-            app:layout_constraintStart_toStartOf="@id/titleName"
-            app:layout_constraintTop_toBottomOf="@id/titleName"/>
+            android:text="Name"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:background="@drawable/white_background"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleUsername">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="22dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/maroon"
-                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: "
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/name"
-                    android:layout_weight="1"
-                    android:text="Name"
-                    android:textStyle="bold"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileName"
-                    android:text="name"
-                    android:layout_weight="1"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
+        </LinearLayout>
 
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="22dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:alpha="0.5"
-                android:background="@color/maroon"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact: "
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/maroon"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/contact"
-                    android:layout_weight="1"
-                    android:text="Contact"
-                    android:textStyle="bold"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileContact"
-                    android:text="contact"
-                    android:layout_weight="1"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:alpha="0.5"
-                android:background="@color/maroon"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:padding="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/email"
-                    android:layout_weight="1"
-                    android:text="Email"
-                    android:textStyle="bold"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileEmail"
-                    android:text="email"
-                    android:layout_weight="1"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:alpha="0.5"
-                android:background="@color/maroon"/>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:alpha="0.5"
-                android:background="@color/maroon"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:padding="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/password"
-                    android:layout_weight="1"
-                    android:text="Password"
-                    android:textStyle="bold"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profilePassword"
-                    android:text="password"
-                    android:layout_weight="1"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/maroon"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:id="@+id/editProfile"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/maroon"
-            android:textStyle="bold"
-            android:text="Edit Profile"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            app:cornerRadius = "20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/linearLayout"
-            app:layout_constraintStart_toStartOf="@id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
+            android:id="@+id/update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Edit Profile" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
 
 
 </ScrollView>

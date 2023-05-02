@@ -1,5 +1,10 @@
 package com.example.kamhometools;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
@@ -56,7 +63,16 @@ public class ProductDetailFragment extends Fragment {
         call_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Call Button Clicked", Toast.LENGTH_SHORT).show();
+//                Intent callIntent = new Intent(Intent.ACTION_CALL);
+//                callIntent.setData(Uri.parse("tel:+256776100100"));
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+//                    return;
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256776100100"));
+                    startActivity(callIntent);
+                }
+
+
             }
         });
         message_button.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +90,7 @@ public class ProductDetailFragment extends Fragment {
         place_order_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Place Order Button Clicked", Toast.LENGTH_SHORT).show();
+                showPlaceOrderDialog();
             }
         });
 
@@ -87,5 +103,57 @@ public class ProductDetailFragment extends Fragment {
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
     }
+
+    private void showPlaceOrderDialog() {
+        // create dialog builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        // set dialog title
+        builder.setTitle("Place Order");
+
+        // set dialog message
+        builder.setMessage("Choose how you want to place your order:");
+
+        // add buttons to dialog
+        builder.setPositiveButton("WhatsApp Message", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // redirect to WhatsApp number
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/256776100100"));
+                startActivity(intent);
+            }
+        });
+
+
+        builder.setNeutralButton("Order on MTN", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // redirect to MTN number
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256776100100"));
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Order on Chat", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256200944200"));
+//                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Order on Airtel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256200944200"));
+                startActivity(intent);
+
+            }
+        });
+
+        // create and show dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
 

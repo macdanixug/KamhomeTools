@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/maroon"
-            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
             android:text="Daniel Oluga Amecu is a multi-talented designer with skills in graphics, web and app design. He has a passion for creating visually appealing designs that are both functional and user-friendly."
             android:layout_margin="16dp"/>
 
@@ -64,23 +64,27 @@
             android:layout_margin="16dp">
 
             <ImageView
+                android:id="@+id/twitter"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/twitter"/>
 
             <ImageView
+                android:id="@+id/facebook"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"
                 android:src="@drawable/facebook"/>
 
             <ImageView
+                android:id="@+id/github"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"
                 android:src="@drawable/github"/>
 
             <ImageView
+                android:id="@+id/linkedin"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"
@@ -88,6 +92,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/project_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Other Projects"
@@ -97,83 +102,68 @@
             android:textSize="18sp"
             android:layout_marginStart="16dp"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/constraintLayout">
-
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="175dp"
-                android:id="@+id/row1"
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp"
-                android:gravity="center"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
-                <androidx.cardview.widget.CardView
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/project1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_margin="10dp"
-                    app:cardElevation="20dp"
-                    app:cardCornerRadius="20dp"
-                    >
+                    android:src="@drawable/image_2"/>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/project1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textAlignment="center"
+                        android:text="Kamhome Pharmacy"
+                        android:textSize="16sp"
+                        android:layout_margin="10dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"/>
 
-                        <Button
-                            android:id="@+id/projectBtn1"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            android:layout_centerHorizontal="true"
-                            android:textAlignment="center"
-                            android:background="@drawable/rounded_button"
-                            android:text="Kamhome Pharmacy"
-                            android:textSize="16sp"
-                            android:padding="10dp"
-                            android:textColor="@color/white"/>
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/project2"
-                    android:layout_margin="10dp"
-                    app:cardElevation="20dp"
-                    app:cardCornerRadius="20dp"
-                    >
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <Button
-                            android:id="@+id/projectBtn2"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            android:layout_centerHorizontal="true"
-                            android:textAlignment="center"
-                            android:background="@drawable/rounded_button"
-                            android:text="Kamhome Hostels"
-                            android:textSize="16sp"
-                            android:padding="10dp"
-                            android:textColor="@color/white"/>
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/image_2"/>
+
+                <Button
+                    android:id="@+id/project2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textAlignment="center"
+                    android:text="Kamhome Hostels"
+                    android:textSize="16sp"
+                    android:layout_margin="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

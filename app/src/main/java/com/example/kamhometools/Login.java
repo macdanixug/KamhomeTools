@@ -22,7 +22,7 @@ public class Login extends AppCompatActivity {
 
     EditText loginEmail, loginPassword;
     Button loginButton;
-    TextView signupRedirectText;
+    TextView signupRedirectText,forgot;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     @Override
@@ -34,8 +34,7 @@ public class Login extends AppCompatActivity {
         loginPassword = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
         signupRedirectText = findViewById(R.id.signupRedirectText);
-
-
+        forgot = findViewById(R.id.forgot);
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -93,6 +92,15 @@ public class Login extends AppCompatActivity {
 
 
                 }
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, ForgotPassword.class);
+                startActivity(intent);
+                finish();
             }
         });
 

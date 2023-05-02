@@ -1,6 +1,7 @@
 package com.example.kamhometools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -56,10 +56,16 @@ public class blogAdapter extends RecyclerView.Adapter<blogAdapter.myViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(context, model.getBlog_title() + "Clicked", Toast.LENGTH_SHORT).show();
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new BlogDetailsFragment("Title","Image","Message")).addToBackStack(null).commit();
-            }
+                // Create an intent to start the Details activity
+                Intent intent = new Intent(context, Details.class);
+                // Put the title, image URL, and message of the clicked item as extras in the intent
+                intent.putExtra("title", model.getBlog_title());
+                intent.putExtra("image", model.getImageUrl());
+                intent.putExtra("message", model.getBlog_message());
+
+                // Start the Details activity with the intent
+                context.startActivity(intent);
+               }
         });
     }
 
