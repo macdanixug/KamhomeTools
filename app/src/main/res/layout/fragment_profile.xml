@@ -8,13 +8,24 @@
     android:background="@color/white"
     tools:context=".ProfileFragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="@color/maroon"
+            android:textAlignment="center"
+            android:layout_margin="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView

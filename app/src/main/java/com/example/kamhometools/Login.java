@@ -78,8 +78,10 @@ public class Login extends AppCompatActivity {
                                     finish();
                                 }else{
                                     Toast.makeText(Login.this, "User Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent men = new Intent(Login.this, UserMainPage.class);
-                                    startActivity(men);
+                                    Intent customer = new Intent(Login.this, UserMainPage.class);
+                                    customer.putExtra("email", Email);
+                                    customer.putExtra("userId", myUserId);
+                                    startActivity(customer);
                                     finish();
                                 }
 //

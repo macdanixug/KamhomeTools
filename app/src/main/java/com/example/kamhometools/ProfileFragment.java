@@ -1,6 +1,8 @@
 package com.example.kamhometools;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +16,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
-    private FirebaseUser currentUser;
-    private TextView mNameTextView, mEmailTextView, mPhoneTextView, mAgeTextView, mAddressTextView;
-    private Button mUpdateButton, editProfile;
-    private ImageView myProfile;
+    FirebaseAuth mAuth;
+    DatabaseReference mDatabase;
+    FirebaseUser currentUser;
+    TextView mNameTextView, mEmailTextView, mPhoneTextView;
+    Button mUpdateButton;
+    ImageView profileImage;
 
     public ProfileFragment(){
 
@@ -42,20 +45,33 @@ public class ProfileFragment extends Fragment {
         mEmailTextView = view.findViewById(R.id.email);
         mPhoneTextView = view.findViewById(R.id.phone);
         mUpdateButton = view.findViewById(R.id.update);
-//        editProfile=view.findViewById(R.id.edit_profile);
-        myProfile=view.findViewById(R.id.image);
+        profileImage = view.findViewById(R.id.image);
+
+        Intent intent = getActivity().getIntent();
+        String name = intent.getStringExtra("name");
+        String email = intent.getStringExtra("email");
+        String phone = intent.getStringExtra("contact");
+        String imageUrl = intent.getStringExtra("imageUrl");
+
+        // Set the user data to the TextViews
+        mNameTextView.setText(name);
+        mEmailTextView.setText(email);
+        mPhoneTextView.setText(phone);
+        Picasso.get().load(imageUrl).into(profileImage);
+
+        Log.d("ProfileFragment", "email: " + email );
 
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Retrieve the user data from TextViews
-                String name = mNameTextView.getText().toString();
-                String email = mEmailTextView.getText().toString();
-                String phone = mPhoneTextView.getText().toString();
-
-                // Create a new instance of the update dialog fragment with the user data
-                ProfileUpdateDialog dialog = ProfileUpdateDialog.newInstance(name, email, phone);
-                dialog.show(getParentFragmentManager(), "Update Profile");
+//                // Retrieve the user data from TextViews
+//                String name = mNameTextView.getText().toString();
+//                String email = mEmailTextView.getText().toString();
+//                String phone = mPhoneTextView.getText().toString();
+//
+//                // Create a new instance of the update dialog fragment with the user data
+//                ProfileUpdateDialog dialog = ProfileUpdateDialog.newInstance(name, email, phone);
+//                dialog.show(getParentFragmentManager(), "Update Profile");
             }
         });
 

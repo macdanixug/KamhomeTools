@@ -17,10 +17,18 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 
 public class UserMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    FirebaseAuth mAuth;
+    DatabaseReference mDatabase;
+    FirebaseUser currentUser;
     private DrawerLayout drawerLayout;
     TextView profile_name;
     ImageView profile_pic;
@@ -45,6 +53,19 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
         View headerView = navigationView.getHeaderView(0);
         ImageView profilePic = headerView.findViewById(R.id.profile_pic);
         TextView profileName = headerView.findViewById(R.id.profile_name);
+
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        currentUser = mAuth.getCurrentUser();
+        mDatabase.child(currentUser.getUid());
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String profilepic = intent.getStringExtra("imageUrl");
+
+        // Set the user data to the TextViews
+        profileName.setText(name);
+        Picasso.get().load(profilepic).into(profilePic);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_menu,
                 R.string.close_menu);
