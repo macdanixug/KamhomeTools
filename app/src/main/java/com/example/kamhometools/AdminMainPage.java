@@ -3,6 +3,7 @@ package com.example.kamhometools;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,11 +13,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class AdminMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,8 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mAuth = FirebaseAuth.getInstance();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -49,8 +55,19 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
             case R.id.post_news:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostBlogsFragment()).commit();
                 break;
+            case R.id.admin_chat:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostBlogsFragment()).commit();
+                Toast.makeText(this, "Chat Box selected", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.manage_pdts:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductManagementFragment()).commit();
+                break;
+            case R.id.manage_blogs:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlogsManagementFragment()).commit();
+                break;
             case R.id.nav_logout:
-                Intent intent = new Intent(AdminMainPage.this,MainActivity.class);
+                mAuth.signOut();
+                Intent intent = new Intent(AdminMainPage.this, Login.class);
                 startActivity(intent);
                 finish();
                 break;

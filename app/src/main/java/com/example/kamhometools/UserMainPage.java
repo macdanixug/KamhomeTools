@@ -105,11 +105,12 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
                 startActivity(intent1);
                 finish();
                 break;
-            case R.id.nav_logout:
-                Intent intent2 = new Intent(UserMainPage.this,MainActivity.class);
-                startActivity(intent2);
-                finish();
-                break;
+//            case R.id.nav_logout:
+//                mAuth.signOut();
+//                Intent log = new Intent(UserMainPage.this,Login.class);
+//                startActivity(log);
+//                finish();
+//                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

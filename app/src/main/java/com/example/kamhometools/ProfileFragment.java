@@ -2,7 +2,6 @@ package com.example.kamhometools;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,16 +50,13 @@ public class ProfileFragment extends Fragment {
         String name = intent.getStringExtra("name");
         String email = intent.getStringExtra("email");
         String phone = intent.getStringExtra("contact");
-        String imageUrl = intent.getStringExtra("imageUrl");
+
 
         // Set the user data to the TextViews
         mNameTextView.setText(name);
         mEmailTextView.setText(email);
         mPhoneTextView.setText(phone);
-        Picasso.get().load(imageUrl).into(profileImage);
-
-        Log.d("ProfileFragment", "email: " + email );
-
+        Picasso.get().load(R.drawable.dp).into(profileImage);
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

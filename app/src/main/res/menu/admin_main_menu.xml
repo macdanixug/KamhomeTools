@@ -13,6 +13,19 @@
             android:id="@+id/post_news"
             android:icon="@drawable/blogs"
             android:title="Post News"/>
+        <item
+            android:id="@+id/admin_chat"
+            android:icon="@drawable/message"
+            android:title="Admin Chat"/>
+        <item
+            android:id="@+id/manage_pdts"
+            android:icon="@drawable/product_name"
+            android:title="Manage Products"/>
+        <item
+            android:id="@+id/manage_blogs"
+            android:icon="@drawable/blogs"
+            android:title="Manage Blogs"/>
+
     </group>
     <item
         android:title="">
