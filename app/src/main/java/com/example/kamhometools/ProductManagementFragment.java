@@ -5,12 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.cardview.widget.CardView;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class ProductManagementFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<PostProducts> list;
+    adminProductAdapter adapter;
+    final private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("PostProducts");
 
     public ProductManagementFragment() {
     }
@@ -21,48 +35,34 @@ public class ProductManagementFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_management, container, false);
 
-        // Find the cardviews by their IDs
-        CardView updateCard = view.findViewById(R.id.update_product_card);
-        CardView addCard = view.findViewById(R.id.add_product_card);
-        CardView deleteCard = view.findViewById(R.id.delete_product_card);
+        recyclerView= view.findViewById(R.id.recview);
 
-        // Set onClickListeners for each cardview
-        updateCard.setOnClickListener(new View.OnClickListener() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        list= new ArrayList<>();
+        adapter = new adminProductAdapter(getActivity(),list);
+        recyclerView.setAdapter(adapter);
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                // Launch the UpdateFragment
-                UpdateProductFragment updateFragment = new UpdateProductFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                fragmentManager.popBackStack(); // Remove old fragment from the back stack
-                transaction.replace(R.id.product_management_fragment_container, updateFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    PostProducts object = snapshot.getValue(PostProducts.class);
+                    list.add(object);
+                }
+
+                adminProductAdapter adapter = new adminProductAdapter(getActivity(), list);
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
             }
         });
 
-
-        addCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Launch the AdminFragment
-                Fragment fragment = new AdminFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.product_management_fragment_container, fragment).commit();
-            }
-        });
-
-        deleteCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Launch the DeleteFragment
-                DeleteProductFragment deleteFragment = new DeleteProductFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.product_management_fragment_container, deleteFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
 
         return view;
     }

@@ -79,7 +79,7 @@ public class ProfileUpdateDialog extends DialogFragment {
         Bundle args = new Bundle();
         args.putString("name", name);
         args.putString("email", email);
-        args.putString("phone", phone);
+        args.putString("contact", phone);
         fragment.setArguments(args);
         return fragment;
     }

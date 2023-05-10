@@ -5,6 +5,7 @@ public class PostProducts {
     private String productDescription;
     private String priceCatalog;
     private String imageUri;
+    private String key;
 
     public PostProducts(String productName, String productDescription, String priceCatalog, String imageUri) {
         this.productName = productName;
@@ -47,6 +48,14 @@ public class PostProducts {
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
 }
