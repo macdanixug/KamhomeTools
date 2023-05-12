@@ -85,7 +85,7 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.myViewHolder>{
 
             }
         });
-        
+
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,4 +151,3 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.myViewHolder>{
     }
 
 }
-
