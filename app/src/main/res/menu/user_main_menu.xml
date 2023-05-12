@@ -34,10 +34,6 @@
                 android:icon="@drawable/login"
                 android:title="Login"/>
             <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/logout"
-                android:title="Logout"/>
-            <item
                 android:id="@+id/about_developer"
                 android:icon="@drawable/profile"
                 android:title="About developer"/>

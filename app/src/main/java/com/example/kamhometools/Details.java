@@ -33,9 +33,9 @@ public class Details extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         // Get the extras from the intent
-        String blog_title = getIntent().getStringExtra("title");
-        String imageUrl = getIntent().getStringExtra("image");
-        String blog_message = getIntent().getStringExtra("message");
+        String blog_title = getIntent().getStringExtra("blog_title");
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+        String blog_message = getIntent().getStringExtra("blog_message");
 
         title = findViewById(R.id.title);
         message = findViewById(R.id.message);

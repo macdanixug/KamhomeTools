@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 
 public class UserMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -44,8 +43,6 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
 // set the user's profile pic and name here
-
-
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -57,15 +54,6 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         currentUser = mAuth.getCurrentUser();
-        mDatabase.child(currentUser.getUid());
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String profilepic = intent.getStringExtra("imageUrl");
-
-        // Set the user data to the TextViews
-        profileName.setText(name);
-        Picasso.get().load(profilepic).into(profilePic);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_menu,
                 R.string.close_menu);
@@ -105,12 +93,6 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
                 startActivity(intent1);
                 finish();
                 break;
-//            case R.id.nav_logout:
-//                mAuth.signOut();
-//                Intent log = new Intent(UserMainPage.this,Login.class);
-//                startActivity(log);
-//                finish();
-//                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

@@ -65,27 +65,6 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.myViewHolder>{
         imageUri = model.getImageUrl();
         Picasso.get().load(imageUri).into(holder.user_image);
 
-
-
-        holder.edit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                String blogTitle = model.getBlog_title();
-//                String blogMessage = model.getBlog_message();
-//                String blogImage = model.getImageUrl();
-//                String blogId = model.getId();
-//
-//                Intent intent = new Intent(context, UpdateBlog.class);
-//                intent.putExtra("id", blogId);
-//                intent.putExtra("blog_title", blogTitle);
-//                intent.putExtra("imageUrl", blogImage);
-//                intent.putExtra("blog_message", blogMessage);
-//                context.startActivity(intent);
-                Toast.makeText(context, "Edit Button", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +115,7 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.myViewHolder>{
 
     public static class myViewHolder extends RecyclerView.ViewHolder {
         TextView user_fullname, user_contact, user_email;
-        ImageView user_image, delete_button, edit_button;
+        ImageView user_image, delete_button;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,7 +124,6 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.myViewHolder>{
             user_email = itemView.findViewById(R.id.user_email);
             user_image = itemView.findViewById(R.id.user_image);
             delete_button = itemView.findViewById(R.id.delete_button);
-            edit_button = itemView.findViewById(R.id.edit_button);
 
         }
     }
