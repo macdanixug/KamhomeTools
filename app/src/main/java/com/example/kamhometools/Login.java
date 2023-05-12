@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
                                 String myUserId = currentUser.getUid();
 //                                Toast.makeText(Login.this,myUserId, Toast.LENGTH_SHORT).show();
 
-                                if (myUserId.equals("iXRwo2JM97V11lDuW49YvZv0Fbh2")) {
+                                if (myUserId.equals("kls4XrRKonT5NcNjfZYTZmmr4yB2")) {
                                     //grant access to database
                                     Toast.makeText(Login.this, "Admin Logged in Successful", Toast.LENGTH_SHORT).show();
                                     Intent dash=new Intent(Login.this, AdminMainPage.class);

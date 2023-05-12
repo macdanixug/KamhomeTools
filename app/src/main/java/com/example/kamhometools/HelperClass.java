@@ -8,12 +8,14 @@ public class HelperClass {
     private String password;
     private String role;
     private String imageUrl;
+    private String id;
 
     public HelperClass() {
 
     }
 
-    public HelperClass(String name, String email, String contact, String password, String role, String imageUrl) {
+    public HelperClass(String id, String name, String email, String contact, String password, String role, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.contact = contact;
@@ -40,6 +42,14 @@ public class HelperClass {
 
     public String getContact() {
         return contact;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setContact(String contact) {

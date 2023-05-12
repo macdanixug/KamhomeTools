@@ -1,5 +1,6 @@
 package com.example.kamhometools;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -46,6 +48,7 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
             navigationView.setCheckedItem(R.id.post_drugs);
         }
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -65,11 +68,30 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
             case R.id.manage_blogs:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlogsManagementFragment()).commit();
                 break;
+            case R.id.manage_users:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserViewFragment()).commit();
+                break;
             case R.id.nav_logout:
-                mAuth.signOut();
-                Intent intent = new Intent(AdminMainPage.this, Login.class);
-                startActivity(intent);
-                finish();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Are you sure you want to log out?")
+                        .setTitle("Log Out")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mAuth.signOut();
+                                Intent intent = new Intent(AdminMainPage.this, UserMainPage.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -83,4 +105,6 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
             super.onBackPressed();
         }
     }
+
+
 }

@@ -63,9 +63,7 @@ public class ProductManagementFragment extends Fragment {
             }
         });
 
-
         return view;
     }
-
 
 }

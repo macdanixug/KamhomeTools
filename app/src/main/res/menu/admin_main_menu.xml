@@ -25,6 +25,10 @@
             android:id="@+id/manage_blogs"
             android:icon="@drawable/blogs"
             android:title="Manage Blogs"/>
+        <item
+            android:id="@+id/manage_users"
+            android:icon="@drawable/profile"
+            android:title="Users"/>
 
     </group>
     <item

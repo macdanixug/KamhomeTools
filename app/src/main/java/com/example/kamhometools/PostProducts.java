@@ -5,13 +5,23 @@ public class PostProducts {
     private String productDescription;
     private String priceCatalog;
     private String imageUri;
-    private String key;
 
-    public PostProducts(String productName, String productDescription, String priceCatalog, String imageUri) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
+
+    public PostProducts(String id, String productName, String productDescription, String priceCatalog, String imageUri) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.priceCatalog = priceCatalog;
         this.imageUri = imageUri;
+        this.id = id;
 
     }
 
@@ -48,14 +58,6 @@ public class PostProducts {
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
 }

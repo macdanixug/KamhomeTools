@@ -164,10 +164,9 @@ public class Signup extends AppCompatActivity {
                                 String uName = signupName.getText().toString().trim();
                                 String uContact = signupContact.getText().toString().trim();
                                 String Role = "User";
-
-                                HelperClass model = new HelperClass(uName, userEmail, uContact, userPassword,Role,uri.toString());
-                                // Generate a unique key for the user registration in the Realtime Database
                                 String userId = root.push().getKey();
+                                HelperClass model = new HelperClass(userId,uName, userEmail, uContact, userPassword,Role,uri.toString());
+                                // Generate a unique key for the user registration in the Realtime Database
                                 root.child(userId).setValue(model);
                                 progressDialog.dismiss();
 
@@ -175,7 +174,7 @@ public class Signup extends AppCompatActivity {
                                 signupContact.getText().clear();
                                 signupEmail.getText().clear();
                                 signupPassword.getText().clear();
-                                image.setImageResource(0);
+                                image.setImageResource(R.drawable.upload);
 
 //                        blog_message.getText().toString();
 
@@ -192,7 +191,7 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(Signup.this, "Signup Failed Failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Signup.this, "Signup Failed. Please Try Again", Toast.LENGTH_LONG).show();
 
                     }
                 });

@@ -98,11 +98,11 @@ public class AdminFragment extends Fragment {
 
 
     private void uploadpost () {
+        String pName = productname.getText().toString().trim();
+        String pDescription = product_description.getText().toString().trim();
+        String pPriceCatalog = priceCatalog.getText().toString().trim();
         if (imageUri != null) {
 
-            String pName = productname.getText().toString().trim();
-            String pDescription = product_description.getText().toString().trim();
-            String pPriceCatalog = priceCatalog.getText().toString().trim();
             if (pName.isEmpty()) {
                 productname.setError("Product Name is required");
                 productname.requestFocus();
@@ -140,15 +140,17 @@ public class AdminFragment extends Fragment {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        String modelId = root.push().getKey();
-
-                        PostProducts model = new PostProducts(productname.getText().toString(), product_description.getText().toString(), priceCatalog.getText().toString(), uri.toString());
-                        root.child(modelId).setValue(model);
+                        String pName = productname.getText().toString().trim();
+                        String pDescription = product_description.getText().toString().trim();
+                        String pPriceCatalog = priceCatalog.getText().toString().trim();
+                        String productId = root.push().getKey();
+                        PostProducts model = new PostProducts(productId, pName, pDescription, pPriceCatalog, uri.toString());
+                        root.child(productId).setValue(model);
                         progressDialog.dismiss();
                         productname.getText().clear();
                         product_description.getText().clear();
                         priceCatalog.getText().clear();
-                        image1.setImageResource(0);product_description.getText().toString();
+                        image1.setImageResource(R.drawable.upload);product_description.getText().toString();
                         Toast.makeText(getActivity(), "Upload Sucessful", Toast.LENGTH_LONG)
                                 .show();
                     }

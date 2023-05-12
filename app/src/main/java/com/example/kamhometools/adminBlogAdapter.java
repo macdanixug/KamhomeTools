@@ -24,61 +24,78 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapter.MyViewHolder> {
-    private List<PostProducts> items;
-    private Context context;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference productsRef = database.getReference().child("PostProducts");
+public class adminBlogAdapter extends RecyclerView.Adapter<adminBlogAdapter.myViewHolder>{
 
-    public adminProductAdapter(Context context, List<PostProducts> items) {
-        this.items = items;
+    private Context context;
+    private ArrayList<BlogModel> list;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference blogsRef = database.getReference().child("Blogs");
+    private adminBlogAdapter.OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(BlogModel item);
+    }
+
+    public adminBlogAdapter(Context context, List<BlogModel> list) {
         this.context = context;
+        this.list = (ArrayList<BlogModel>) list;
+    }
+
+
+    public void setOnItemClickListener(adminBlogAdapter.OnItemClickListener listener) {
+        mListener = listener;
     }
 
     @NonNull
     @Override
-    public adminProductAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        Inflating the design of the pharmacy layout
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_design,null));
+    public adminBlogAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.blog_update_design, parent, false);
+        return new adminBlogAdapter.myViewHolder(v);
     }
 
     @SuppressLint("RecyclerView")
     @Override
-    public void onBindViewHolder(@NonNull adminProductAdapter.MyViewHolder holder, int position) {
-        PostProducts model = items.get(position);
-        holder.productName.setText(items.get(position).getProductName());
-        holder.priceCatalog.setText("UGX " + items.get(position).getPriceCatalog());
-        Picasso.get().load(items.get(position).getImageUri()).into(holder.image1);
+    public void onBindViewHolder(@NonNull adminBlogAdapter.myViewHolder holder, int position) {
+        BlogModel model = list.get(position);
+        holder.blog_title.setText(model.getBlog_title());
+        String imageUri;
+        imageUri = model.getImageUrl();
+        Picasso.get().load(imageUri).into(holder.blog_image);
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Intent intent = new Intent(context, AdminViewProducts.class);
+                // Create an intent to start the Details activity
+                Intent intent = new Intent(context, AdminViewBlogs.class);
                 // Put the title, image URL, and message of the clicked item as extras in the intent
-                intent.putExtra("productName", model.getProductName());
-                intent.putExtra("priceCatalog", model.getPriceCatalog());
-                intent.putExtra("productDescription", model.getProductDescription());
-                intent.putExtra("imageUri", model.getImageUri());
+                intent.putExtra("blog_title", model.getBlog_title());
+                intent.putExtra("imageUrl", model.getImageUrl());
+                intent.putExtra("blog_message", model.getBlog_message());
+
+                // Start the Details activity with the intent
                 context.startActivity(intent);
             }
         });
+
+
         holder.updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String productName = model.getProductName();
-                String priceCatalog = model.getPriceCatalog();
-                String productDescription = model.getProductDescription();
-                String imageUrl = model.getImageUri();
-                String ProductID = model.getId();
+                String blogTitle = model.getBlog_title();
+                String blogMessage = model.getBlog_message();
+                String blogImage = model.getImageUrl();
+                String blogId = model.getId();
 
-                Intent intent = new Intent(context, UpdateProduct.class);
-                intent.putExtra("id", ProductID);
-                intent.putExtra("productName", productName);
-                intent.putExtra("priceCatalog", priceCatalog);
-                intent.putExtra("productDescription", productDescription);
-                intent.putExtra("imageUri", imageUrl);
+                Intent intent = new Intent(context, UpdateBlog.class);
+                intent.putExtra("id", blogId);
+                intent.putExtra("blog_title", blogTitle);
+                intent.putExtra("imageUrl", blogImage);
+                intent.putExtra("blog_message", blogMessage);
                 context.startActivity(intent);
 
             }
@@ -87,27 +104,27 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder delete = new AlertDialog.Builder(context);
-                delete.setTitle("Are you sure?");
-                delete.setMessage("You will not be able to recover...");
+                delete.setTitle("Are you sure you want to delete this Blog?");
+                delete.setMessage("You will not be able to recover this Blog...");
                 delete.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String productId = items.get(position).getId();
-                        String imageUrl = items.get(position).getImageUri();
+                        String BlogsId = list.get(position).getId();
+                        String imageUrl = list.get(position).getImageUrl();
 
-                        productsRef.child(productId).removeValue();
+                        blogsRef.child(BlogsId).removeValue();
                         StorageReference imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
                         imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 // File deleted successfully
-                                Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Blog Deleted Successfully", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
                                 // An error occurred while deleting the file
-                                Toast.makeText(context, "Failed to Delete Product", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Failed to Delete Blog", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -122,26 +139,30 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
             }
         });
 
+
+
     }
+
     @Override
     public int getItemCount() {
-        return items.size();
+        return list.size();
     }
-    static  class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView productName, productDescription, priceCatalog;
-        ImageView image1;
-        private Button deleteBtn, updateBtn;
 
-        public MyViewHolder(@NonNull View itemView) {
+    public static class myViewHolder extends RecyclerView.ViewHolder {
+        TextView blog_title, blog_message;
+        ImageView blog_image;
+        Button deleteBtn, updateBtn;
+
+        public myViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            productName = itemView.findViewById(R.id.product_title);
-            productDescription = itemView.findViewById(R.id.product_description);
-            priceCatalog = itemView.findViewById(R.id.product_price);
-            image1 = itemView.findViewById(R.id.product_image);
+            blog_title = itemView.findViewById(R.id.blog_title);
+            blog_message = itemView.findViewById(R.id.blog_message);
+            blog_image = itemView.findViewById(R.id.blog_image);
             deleteBtn = itemView.findViewById(R.id.delete);
             updateBtn = itemView.findViewById(R.id.update);
 
         }
     }
+
 }
+

@@ -4,10 +4,21 @@ public class BlogModel {
     private String blog_title, blog_message;
     private String imageUrl;
 
-    public BlogModel(String blog_title, String blog_message, String imageUrl) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
+
+    public BlogModel(String id, String blog_title, String blog_message, String imageUrl) {
         this.blog_title = blog_title;
         this.blog_message = blog_message;
         this.imageUrl = imageUrl;
+        this.id = id;
     }
 
     public BlogModel() {

@@ -59,9 +59,9 @@ public class blogAdapter extends RecyclerView.Adapter<blogAdapter.myViewHolder> 
                 // Create an intent to start the Details activity
                 Intent intent = new Intent(context, Details.class);
                 // Put the title, image URL, and message of the clicked item as extras in the intent
-                intent.putExtra("title", model.getBlog_title());
-                intent.putExtra("image", model.getImageUrl());
-                intent.putExtra("message", model.getBlog_message());
+                intent.putExtra("blog_title", model.getBlog_title());
+                intent.putExtra("imageUrl", model.getImageUrl());
+                intent.putExtra("blog_message", model.getBlog_message());
 
                 // Start the Details activity with the intent
                 context.startActivity(intent);

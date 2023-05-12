@@ -118,7 +118,7 @@ public class PostBlogsFragment extends Fragment {
         // if (currentUser != null) {
 //            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 //                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-        progressDialog.setTitle("Uploading .. .. ..");
+        progressDialog.setTitle("Uploading Blog .. .. ..");
         progressDialog.setMessage("Please wait....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -129,14 +129,13 @@ public class PostBlogsFragment extends Fragment {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        String modelId = root.push().getKey();
-
-                        BlogModel model = new BlogModel(blog_title.getText().toString(), blog_message.getText().toString(), uri.toString());
-                        root.child(modelId).setValue(model);
+                        String blogId = root.push().getKey();
+                        BlogModel model = new BlogModel(blogId,blog_title.getText().toString(), blog_message.getText().toString(), uri.toString());
+                        root.child(blogId).setValue(model);
                         progressDialog.dismiss();
                         blog_title.getText().clear();
                         blog_message.getText().clear();
-                        blog_image.setImageResource(0);
+                        blog_image.setImageResource(R.drawable.upload);
 //                        blog_message.getText().toString();
                         Toast.makeText(getActivity(), "Blog Upload Sucessful", Toast.LENGTH_LONG)
                                 .show();
