@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Products Management"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/maroon"
         app:layout_constraintTop_toTopOf="parent" />

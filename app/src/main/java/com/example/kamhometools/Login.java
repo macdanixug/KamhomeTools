@@ -1,7 +1,10 @@
 package com.example.kamhometools;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
@@ -24,7 +32,8 @@ public class Login extends AppCompatActivity {
     Button loginButton;
     TextView signupRedirectText,forgot;
     private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +45,10 @@ public class Login extends AppCompatActivity {
         signupRedirectText = findViewById(R.id.signupRedirectText);
         forgot = findViewById(R.id.forgot);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        mAuth=FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,35 +75,37 @@ public class Login extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
                             if(task.isSuccessful()){
+                                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String productName = getIntent().getStringExtra("name");
+//                                        String role = dataSnapshot.child("role").getValue(String.class);
+                                        Log.d(TAG, "Name: "+productName);
+//                                        Log.d(TAG, "Role: "+role);
 
-                                String myUserId = currentUser.getUid();
-//                                Toast.makeText(Login.this,myUserId, Toast.LENGTH_SHORT).show();
+//                                        if(dataSnapshot.hasChild("role")){
+//                                            String role = dataSnapshot.child("role").getValue(String.class);
+//                                            Log.d(TAG, "Role: "+role);
+//                                        }
+//                                        else{
+//                                            Toast.makeText(Login.this, "No role", Toast.LENGTH_SHORT).show();
+//                                        }
 
-                                if (myUserId.equals("kls4XrRKonT5NcNjfZYTZmmr4yB2")) {
-                                    //grant access to database
-                                    Toast.makeText(Login.this, "Admin Logged in Successful", Toast.LENGTH_SHORT).show();
-                                    Intent dash=new Intent(Login.this, AdminMainPage.class);
-                                    startActivity(dash);
-                                    finish();
-                                }else{
-                                    if (mAuth.getCurrentUser() != null){
-                                        Toast.makeText(Login.this, "User Login Successful", Toast.LENGTH_SHORT).show();
-                                        Intent customer = new Intent(Login.this, UserMainPage.class);
-                                        startActivity(customer);
-                                        finish();
-                                    }else{
-                                        Toast.makeText(Login.this, "There was an exception logging in", Toast.LENGTH_SHORT).show();
+
                                     }
-                                     }
-//
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
                             }else{
 
                                 Toast.makeText(Login.this, "Login Failed try again", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+
 
 
                 }

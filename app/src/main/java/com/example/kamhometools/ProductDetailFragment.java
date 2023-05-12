@@ -66,7 +66,7 @@ public class ProductDetailFragment extends Fragment {
 //                Intent callIntent = new Intent(Intent.ACTION_CALL);
 //                callIntent.setData(Uri.parse("tel:+256776100100"));
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
 //                    return;
                     Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256776100100"));
                     startActivity(callIntent);
@@ -78,7 +78,7 @@ public class ProductDetailFragment extends Fragment {
         message_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Message Button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Chatbox Clicked", Toast.LENGTH_SHORT).show();
             }
         });
         add_cart_button.setOnClickListener(new View.OnClickListener() {
