@@ -89,6 +89,7 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutDeveloperFragment()).commit();
                 break;
             case R.id.nav_login:
+                mAuth.signOut();
                 Intent intent1 = new Intent(UserMainPage.this,Login.class);
                 startActivity(intent1);
                 finish();
