@@ -30,10 +30,10 @@
                     android:layout_margin="5dp">
 
                     <ImageView
+                        android:id="@+id/poster1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
-                        android:src="@drawable/image_2"
                         android:scaleType="centerCrop"
                         />
 
@@ -47,10 +47,10 @@
                     android:layout_margin="5dp">
 
                     <ImageView
+                        android:id="@+id/poster2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
-                        android:src="@drawable/image_2"
                         android:scaleType="centerCrop"
                         />
 
@@ -64,10 +64,10 @@
                     android:layout_margin="5dp">
 
                     <ImageView
+                        android:id="@+id/poster3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
-                        android:src="@drawable/image_2"
                         android:scaleType="centerCrop"
                         />
 
