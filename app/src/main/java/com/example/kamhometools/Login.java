@@ -77,12 +77,15 @@ public class Login extends AppCompatActivity {
                                     startActivity(dash);
                                     finish();
                                 }else{
-                                    Toast.makeText(Login.this, "User Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent customer = new Intent(Login.this, UserMainPage.class);
-                                    startActivity(customer);
-                                    finish();
-//                                    Toast.makeText(Login.this, "ID: "+myUserId, Toast.LENGTH_SHORT).show();
-                                }
+                                    if (mAuth.getCurrentUser() != null){
+                                        Toast.makeText(Login.this, "User Login Successful", Toast.LENGTH_SHORT).show();
+                                        Intent customer = new Intent(Login.this, UserMainPage.class);
+                                        startActivity(customer);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(Login.this, "There was an exception logging in", Toast.LENGTH_SHORT).show();
+                                    }
+                                     }
 //
                             }else{
 
