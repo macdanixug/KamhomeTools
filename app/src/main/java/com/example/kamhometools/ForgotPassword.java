@@ -32,13 +32,19 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String Email = reset_email.getText().toString().trim();
-                mAuth.sendPasswordResetEmail(Email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(ForgotPassword.this, "Reset link sent to " + Email, Toast.LENGTH_SHORT).show();
-                        reset_email.getText().clear();
-                    }
-                });
+                if(Email.isEmpty()){
+                    reset_email.setError("Email is Required for a password reset*");
+                    reset_email.requestFocus();
+                    return;
+                }else{
+                    mAuth.sendPasswordResetEmail(Email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(ForgotPassword.this, "Password reset email sent. Check your email.", Toast.LENGTH_SHORT).show();
+                            reset_email.getText().clear();
+                        }
+                    });
+                }
             }
         });
     }
