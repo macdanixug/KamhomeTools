@@ -1,9 +1,6 @@
 package com.example.kamhometools;
 
-import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,12 +54,10 @@ public class UserViewFragment extends Fragment {
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String userRole = dataSnapshot.child("role").getValue(String.class);
-                    if (userRole != null && userRole.equals("User")){
-                        numUsers++;
-                        Log.d(TAG,"Number: "+numUsers);
-                    }
+
                     HelperClass object = snapshot.getValue(HelperClass.class);
                     if(object.getRole().equals("User")){
+                        numUsers++;
                         list.add(object);
                     }
                 }

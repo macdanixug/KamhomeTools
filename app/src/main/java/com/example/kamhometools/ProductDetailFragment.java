@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class ProductDetailFragment extends Fragment {
@@ -26,8 +28,6 @@ public class ProductDetailFragment extends Fragment {
     Button product_name_textview, call_button, message_button, add_cart_button, place_order_button;
     ImageView image1,image2,image3;
     TextView product_price_textview, description;
-
-
     public ProductDetailFragment(){
 
     }
@@ -52,6 +52,8 @@ public class ProductDetailFragment extends Fragment {
         message_button = view.findViewById(R.id.message_button);
         add_cart_button = view.findViewById(R.id.add_cart_button);
         place_order_button = view.findViewById(R.id.place_order_button);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         product_name_textview.setText(productName);
         description.setText(productDescription);
@@ -78,13 +80,47 @@ public class ProductDetailFragment extends Fragment {
         message_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Chatbox Clicked", Toast.LENGTH_SHORT).show();
+                if(user !=null){
+                    Toast.makeText(getActivity(), "Chatbox Clicked", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Please sign in to access this feature.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         add_cart_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "To be Implemented in the next update, Kindly be patient!", Toast.LENGTH_SHORT).show();
+                if(user !=null){
+                    Toast.makeText(getActivity(), "Add to Cart Clicked", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "Please sign in to access this feature.", Toast.LENGTH_SHORT).show();
+
+//                    new AlertDialog.Builder().
+//                            setTitle("Login")
+//                            .setMessage("Do you wish to login to add product on the cart?")
+//                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    FirebaseAuth.getInstance().signOut();
+//                                    Intent intent = new Intent(getActivity(), Login.class);
+//                                    startActivity(intent);
+//                                    closeFragment();
+//                                }
+//                            })
+//                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT).show();
+//                                }
+//                            })
+//                            .show();
+                }
+
+
             }
         });
         place_order_button.setOnClickListener(new View.OnClickListener() {
@@ -107,23 +143,16 @@ public class ProductDetailFragment extends Fragment {
     private void showPlaceOrderDialog() {
         // create dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        // set dialog title
         builder.setTitle("Place Order");
-
-        // set dialog message
         builder.setMessage("Choose how you want to place your order:");
 
-        // add buttons to dialog
         builder.setPositiveButton("WhatsApp Message", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // redirect to WhatsApp number
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/256776100100"));
                 startActivity(intent);
             }
         });
-
 
         builder.setNeutralButton("Order on MTN", new DialogInterface.OnClickListener() {
             @Override
@@ -131,13 +160,6 @@ public class ProductDetailFragment extends Fragment {
                 // redirect to MTN number
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256776100100"));
                 startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("Order on Chat", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:+256200944200"));
-//                startActivity(intent);
             }
         });
 
@@ -153,6 +175,11 @@ public class ProductDetailFragment extends Fragment {
         // create and show dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+    public void closeFragment(){
+        if (isAdded() && getActivity() !=null){
+            getActivity().getSupportFragmentManager().popBackStack();
+        }
     }
 
 }
