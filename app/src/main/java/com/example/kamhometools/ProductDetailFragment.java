@@ -84,11 +84,9 @@ public class ProductDetailFragment extends Fragment {
                     Toast.makeText(getActivity(), "Chatbox Clicked", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getActivity(), "Please sign in to access this feature.", Toast.LENGTH_SHORT).show();
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Login");
-                    builder.setMessage("Do you wish to login to chat with our Admin?");
+                    builder.setMessage("Please log in to access this feature.\nDo you wish to login to chat with our Admin?");
                     builder .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -120,11 +118,9 @@ public class ProductDetailFragment extends Fragment {
 
                 }
                 else{
-                    Toast.makeText(getActivity(), "Please sign in to access this feature.", Toast.LENGTH_SHORT).show();
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Login");
-                    builder.setMessage("Do you wish to login to add product on the cart?");
+                    builder.setMessage("Please log in to access this feature.\nDo you wish to login to add product on the cart?");
                     builder .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

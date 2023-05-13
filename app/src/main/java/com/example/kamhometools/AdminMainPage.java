@@ -1,10 +1,15 @@
 package com.example.kamhometools;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,13 +114,58 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
             case R.id.manage_blogs:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlogsManagementFragment()).commit();
                 break;
+
+
             case R.id.manage_users:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserViewFragment()).commit();
+                // Prompt the user to enter password
+                final EditText inputPassword = new EditText(this);
+                inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("Enter Password")
+                        .setView(inputPassword)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Check if the entered password matches the user's password
+                                String password = inputPassword.getText().toString();
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                String uid = currentUser.getUid();
+                                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String userPassword = snapshot.child("password").getValue(String.class);
+                                        if (password.equals(userPassword)) {
+                                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserViewFragment()).commit();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Incorrect password, try again", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Log.e(TAG, "onCancelled: " + error.getMessage());
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                builder.show();
                 break;
+
+
+
+
+
+
             case R.id.nav_logout:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Are you sure you want to log out?")
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage("Are you sure you want to log out?")
                         .setTitle("Log Out")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -131,7 +181,7 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
                                 dialog.dismiss();
                             }
                         });
-                AlertDialog alert = builder.create();
+                AlertDialog alert = builder1.create();
                 alert.show();
                 break;
         }
