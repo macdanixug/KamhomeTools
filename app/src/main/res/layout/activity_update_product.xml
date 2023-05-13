@@ -108,21 +108,21 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/image1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/upload"
                     android:scaleType="centerCrop"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/image2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/upload"
                     android:scaleType="centerCrop"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/image3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
