@@ -25,7 +25,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,24 +38,20 @@ public class Signup extends AppCompatActivity {
     ImageView image;
     TextView loginRedirectText;
     Button signupButton;
-
-    private ProgressDialog progressDialog;
-    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-    private DatabaseReference root = FirebaseDatabase.getInstance().getReference("Users");
+    private ProgressDialog progressDialog;
     public static final int RESULT_OK = -1;
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
-
     private Uri imageUri;
-    ProgressBar progressBar;
 
     private static final int IMAGE_PICK_CODE = 1000;
-
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        mAuth=FirebaseAuth.getInstance();
 
         signupName = findViewById(R.id.signup_name);
         signupEmail = findViewById(R.id.signup_email);
@@ -65,22 +60,21 @@ public class Signup extends AppCompatActivity {
         loginRedirectText = findViewById(R.id.loginRedirectText);
         signupButton = findViewById(R.id.signup_button);
         image = findViewById(R.id.image);
-        progressBar = findViewById(R.id.progressBar);
+
         progressDialog = new ProgressDialog(this);
-        progressBar.setVisibility(View.INVISIBLE);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
         image.setOnClickListener(v -> chooseimg());
-
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                uploadpost();
+            public void onClick(View view) {
+                if (imageUri != null) {
+                    uploadPost();
+                } else {
+                    Toast.makeText(Signup.this, "Please select an image", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
 
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,15 +83,15 @@ public class Signup extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+    }
     private void chooseimg() {
+//        Opening Gallery
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, 2);
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -106,9 +100,8 @@ public class Signup extends AppCompatActivity {
             image.setImageURI(imageUri);
         }
     }
-    private void uploadpost () {
+    private void uploadPost () {
         if (imageUri != null) {
-
             String uName = signupName.getText().toString().trim();
             String uEmail = signupEmail.getText().toString().trim();
             String uContact = signupContact.getText().toString().trim();
@@ -134,76 +127,85 @@ public class Signup extends AppCompatActivity {
                 signupPassword.requestFocus();
                 return;
             }
-            UploadToFirebase(imageUri);
-        } else {
-            Toast.makeText(this, "Please Select Image", Toast.LENGTH_LONG).show();
+            else {
+                mAuth.createUserWithEmailAndPassword(signupEmail.getText().toString(), signupPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            UploadToFirebase(imageUri);
+                        }
+                    }
+                });
+            }
         }
     }
-
-    private void UploadToFirebase (Uri uri){
-        progressDialog.setTitle("Signing up .. .. ..");
+    private void UploadToFirebase (Uri uri) {
+        progressDialog.setTitle("Signing up in progress.. .. ..");
         progressDialog.setMessage("Please wait....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+
         final StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-
-        String userEmail = signupEmail.getText().toString().trim();
-        String userPassword = signupPassword.getText().toString().trim();
-
-        mAuth.createUserWithEmailAndPassword(userEmail,userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                    public void onSuccess(Uri uri) {
+                        String uName = signupName.getText().toString().trim();
+                        String uEmail = signupEmail.getText().toString().trim();
+                        String uContact = signupContact.getText().toString().trim();
+                        String uPassword = signupPassword.getText().toString().trim();
+                        String Role="User";
 
-                                String uName = signupName.getText().toString().trim();
-                                String uContact = signupContact.getText().toString().trim();
-                                String Role = "User";
-                                String userId = root.push().getKey();
-                                HelperClass model = new HelperClass(userId,uName, userEmail, uContact, userPassword,Role,uri.toString());
-                                // Generate a unique key for the user registration in the Realtime Database
-                                root.child(userId).setValue(model);
-                                progressDialog.dismiss();
+                        DatabaseReference root = FirebaseDatabase.getInstance().getReference("Users");
+                        String userID = root.push().getKey();
+                        // Create a new user object with the data
+                        HelperClass user = new HelperClass(userID,uName, uEmail, uContact, uPassword, Role, uri.toString());
+                        // Get a reference to the "users" node
+                        FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            progressDialog.dismiss();
 
-                                signupName.getText().clear();
-                                signupContact.getText().clear();
-                                signupEmail.getText().clear();
-                                signupPassword.getText().clear();
-                                image.setImageResource(R.drawable.upload);
+                                            signupName.getText().clear();
+                                            signupContact.getText().clear();
+                                            signupEmail.getText().clear();
+                                            signupPassword.getText().clear();
+                                            image.setImageResource(R.drawable.upload);
+                                            signupName.requestFocus();
 
-//                        blog_message.getText().toString();
+                                            Toast.makeText(Signup.this, "Signup Successfully", Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(Signup.this, "Signup Succesfull", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        progressDialog.show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(Signup.this, "Signup Failed. Please Try Again", Toast.LENGTH_LONG).show();
+                                        }else{
+                                            Toast.makeText(Signup.this, "Error Failed to register", Toast.LENGTH_SHORT).show();
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                });
 
                     }
                 });
-
-
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                progressDialog.show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(Signup.this, "Signup Failed Failed", Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
     }
+
+
+    //Getting File Extension
     private String getFileExtension (Uri mUri){
 
         ContentResolver cr = this.getContentResolver();

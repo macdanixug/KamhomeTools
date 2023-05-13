@@ -1,10 +1,7 @@
 package com.example.kamhometools;
 
-import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -46,9 +43,22 @@ public class Login extends AppCompatActivity {
         forgot = findViewById(R.id.forgot);
 
         mAuth=FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
-
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(Login.this, ForgotPassword.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        signupRedirectText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(Login.this,Signup.class));
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,64 +81,50 @@ public class Login extends AppCompatActivity {
                     loginPassword.setError("Password Should be at least 8 characters*");
                     loginPassword.requestFocus();
                     return;
-                }else{
+                }
+                else{
                     mAuth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             if(task.isSuccessful()){
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+
                                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String productName = getIntent().getStringExtra("name");
-//                                        String role = dataSnapshot.child("role").getValue(String.class);
-                                        Log.d(TAG, "Name: "+productName);
-//                                        Log.d(TAG, "Role: "+role);
-
-//                                        if(dataSnapshot.hasChild("role")){
-//                                            String role = dataSnapshot.child("role").getValue(String.class);
-//                                            Log.d(TAG, "Role: "+role);
-//                                        }
-//                                        else{
-//                                            Toast.makeText(Login.this, "No role", Toast.LENGTH_SHORT).show();
-//                                        }
-
-
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String role = snapshot.child("role").getValue(String.class);
+                                        if(role.equals("Admin")){
+                                           Intent admin = new Intent(Login.this, AdminMainPage.class);
+                                           startActivity(admin);
+                                           finish();
+                                        }
+                                        else if (role.equals("User")) {
+                                            Intent user = new Intent(Login.this, UserMainPage.class);
+                                            startActivity(user);
+                                            finish();
+                                        }
+                                        else{
+                                            Toast.makeText(Login.this, "Login Failed try again", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
 
                                     @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
                                     }
                                 });
-                            }else{
 
+                            }else{
                                 Toast.makeText(Login.this, "Login Failed try again", Toast.LENGTH_SHORT).show();
                             }
+
                         }
                     });
-
-
-
                 }
             }
         });
-
-        forgot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, ForgotPassword.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-//        Creating account
-        signupRedirectText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this,Signup.class));
-            }
-        });
-
 
 
     }

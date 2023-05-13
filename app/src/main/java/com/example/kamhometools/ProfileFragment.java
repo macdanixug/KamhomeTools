@@ -1,7 +1,6 @@
 package com.example.kamhometools;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
@@ -48,30 +48,34 @@ public class ProfileFragment extends Fragment {
         mUpdateButton = view.findViewById(R.id.update);
         profileImage = view.findViewById(R.id.image);
 
-        mDatabase.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Get the user data from the snapshot
-                String name = snapshot.child("name").getValue(String.class);
-                String email = snapshot.child("email").getValue(String.class);
-                String phone = snapshot.child("contact").getValue(String.class);
+        if (currentUser != null){
 
-                // Set the TextViews with the user data
-                mNameTextView.setText(name);
-                mEmailTextView.setText(email);
-                mPhoneTextView.setText(phone);
+            mDatabase.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    // Get the user data from the snapshot
+                    String name = snapshot.child("name").getValue(String.class);
+                    String email = snapshot.child("email").getValue(String.class);
+                    String phone = snapshot.child("contact").getValue(String.class);
+                    String imageUrl = snapshot.child("imageUrl").getValue(String.class);
 
-                Log.d("ProfileFragment", "name = " + name);
-                Log.d("ProfileFragment", "email = " + email);
-                Log.d("ProfileFragment", "phone = " + phone);
+                    mNameTextView.setText(name);
+                    mEmailTextView.setText(email);
+                    mPhoneTextView.setText(phone);
+                    Picasso.get().load(imageUrl).into(profileImage);
+                }
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle database error
+                }
+            });
+        }else{
+            mNameTextView.setText("Full name");
+            mEmailTextView.setText("Email");
+            mPhoneTextView.setText("Contact");
+            Picasso.get().load(R.drawable.ic_launcher_background).into(profileImage);
+        }
 
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
