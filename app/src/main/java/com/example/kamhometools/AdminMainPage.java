@@ -109,18 +109,13 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
                 Toast.makeText(this, "Chat Box selected", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.manage_pdts:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductManagementFragment()).commit();
-                break;
-            case R.id.manage_blogs:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlogsManagementFragment()).commit();
-                break;
-
-
-            case R.id.manage_users:
-                // Prompt the user to enter password
-                final EditText inputPassword = new EditText(this);
+                EditText inputPassword = new EditText(this);
+                inputPassword.setHint("Enter password");
                 inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                inputPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.password,0,0,0);
+                inputPassword.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.edit_text_drawable_padding));
+
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(this)
                         .setTitle("Enter Password")
                         .setView(inputPassword)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -128,6 +123,95 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Check if the entered password matches the user's password
                                 String password = inputPassword.getText().toString();
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                String uid = currentUser.getUid();
+                                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String userPassword = snapshot.child("password").getValue(String.class);
+                                        if (password.equals(userPassword)) {
+                                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductManagementFragment()).commit();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Incorrect password, try again", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Log.e(TAG, "onCancelled: " + error.getMessage());
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                builder2.show();
+                break;
+
+            case R.id.manage_blogs:
+                EditText inputPassword3 = new EditText(this);
+                inputPassword3.setHint("Enter password");
+                inputPassword3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                inputPassword3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.password,0,0,0);
+                inputPassword3.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.edit_text_drawable_padding));
+
+                AlertDialog.Builder builder3 = new AlertDialog.Builder(this)
+                        .setTitle("Enter Password")
+                        .setView(inputPassword3)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Check if the entered password matches the user's password
+                                String password = inputPassword3.getText().toString();
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                String uid = currentUser.getUid();
+                                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String userPassword = snapshot.child("password").getValue(String.class);
+                                        if (password.equals(userPassword)) {
+                                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlogsManagementFragment()).commit();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Incorrect password, try again", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Log.e(TAG, "onCancelled: " + error.getMessage());
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                builder3.show();
+                break;
+
+            case R.id.manage_users:
+                // Prompt the user to enter password
+                EditText inputPassword2 = new EditText(this);
+                inputPassword2.setHint("Enter password");
+                inputPassword2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                inputPassword2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.password,0,0,0);
+                inputPassword2.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.edit_text_drawable_padding));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("Enter Password")
+                        .setView(inputPassword2)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Check if the entered password matches the user's password
+                                String password = inputPassword2.getText().toString();
                                 FirebaseUser currentUser = mAuth.getCurrentUser();
                                 String uid = currentUser.getUid();
                                 DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
@@ -156,11 +240,6 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
                         });
                 builder.show();
                 break;
-
-
-
-
-
 
             case R.id.nav_logout:
 
