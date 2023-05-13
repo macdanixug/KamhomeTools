@@ -38,6 +38,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+
         recyclerView= view.findViewById(R.id.recview);
         poster1 = view.findViewById(R.id.poster1);
         poster2 = view.findViewById(R.id.poster2);

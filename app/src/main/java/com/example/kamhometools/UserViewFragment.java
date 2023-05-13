@@ -1,6 +1,9 @@
 package com.example.kamhometools;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +53,21 @@ public class UserViewFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int numUsers = (int) dataSnapshot.getChildrenCount();
-                user_count_textview.setText(String.valueOf(numUsers));
+                int numUsers = 0;
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String userRole = dataSnapshot.child("role").getValue(String.class);
+                    if (userRole != null && userRole.equals("User")){
+                        numUsers++;
+                        Log.d(TAG,"Number: "+numUsers);
+                    }
                     HelperClass object = snapshot.getValue(HelperClass.class);
-                    list.add(object);
+                    if(object.getRole().equals("User")){
+                        list.add(object);
+                    }
                 }
+
+                user_count_textview.setText(String.valueOf(numUsers));
 
                 userAdapter adapter = new userAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
