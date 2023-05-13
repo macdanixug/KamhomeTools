@@ -85,6 +85,29 @@ public class ProductDetailFragment extends Fragment {
                 }
                 else{
                     Toast.makeText(getActivity(), "Please sign in to access this feature.", Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Login");
+                    builder.setMessage("Do you wish to login to chat with our Admin?");
+                    builder .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseAuth.getInstance().signOut();
+                                    Intent intent = new Intent(getActivity(), Login.class);
+                                    startActivity(intent);
+                                    closeFragment();
+                                }
+                            });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }
 
             }
@@ -99,25 +122,27 @@ public class ProductDetailFragment extends Fragment {
                 else{
                     Toast.makeText(getActivity(), "Please sign in to access this feature.", Toast.LENGTH_SHORT).show();
 
-//                    new AlertDialog.Builder().
-//                            setTitle("Login")
-//                            .setMessage("Do you wish to login to add product on the cart?")
-//                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    FirebaseAuth.getInstance().signOut();
-//                                    Intent intent = new Intent(getActivity(), Login.class);
-//                                    startActivity(intent);
-//                                    closeFragment();
-//                                }
-//                            })
-//                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT).show();
-//                                }
-//                            })
-//                            .show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Login");
+                    builder.setMessage("Do you wish to login to add product on the cart?");
+                    builder .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            FirebaseAuth.getInstance().signOut();
+                            Intent intent = new Intent(getActivity(), Login.class);
+                            startActivity(intent);
+                            closeFragment();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
 
 

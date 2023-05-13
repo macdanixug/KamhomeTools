@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +40,12 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Loading Products");
+        builder.setMessage("Please wait......");
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
         recyclerView= view.findViewById(R.id.recview);
         poster1 = view.findViewById(R.id.poster1);
@@ -79,7 +85,7 @@ public class HomeFragment extends Fragment {
 
                 productAdapter adapter = new productAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
-
+                dialog.dismiss();
             }
 
             @Override

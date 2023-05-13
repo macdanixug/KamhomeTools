@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,13 @@ public class ProductManagementFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_management, container, false);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Loading Products");
+        builder.setMessage("Please wait......");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
         recyclerView= view.findViewById(R.id.recview);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -54,6 +62,7 @@ public class ProductManagementFragment extends Fragment {
 
                 adminProductAdapter adapter = new adminProductAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
+                dialog.dismiss();
 
             }
 

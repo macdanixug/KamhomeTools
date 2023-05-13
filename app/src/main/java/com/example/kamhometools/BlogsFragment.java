@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,13 @@ public class BlogsFragment extends Fragment {
 
         recyclerView= view.findViewById(R.id.recycleview);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Loading Blogs");
+        builder.setMessage("Please wait......");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         list= new ArrayList<>();
@@ -51,6 +59,7 @@ public class BlogsFragment extends Fragment {
 
                 blogAdapter adapter = new blogAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
+                dialog.dismiss();
 
             }
 

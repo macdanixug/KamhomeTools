@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class BlogsManagementFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_blogs_management, container, false);
+
         recyclerView= view.findViewById(R.id.recview);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -41,6 +43,14 @@ public class BlogsManagementFragment extends Fragment {
         list= new ArrayList<>();
         adapter = new adminBlogAdapter(getActivity(),list);
         recyclerView.setAdapter(adapter);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Loading Blogs");
+        builder.setMessage("Please wait......");
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -53,6 +63,7 @@ public class BlogsManagementFragment extends Fragment {
 
                 adminBlogAdapter adapter = new adminBlogAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
+                dialog.dismiss();
 
             }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,13 @@ public class UserViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_view, container, false);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Loading Users");
+        builder.setMessage("Please wait......");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
         recyclerView= view.findViewById(R.id.recview);
         user_count_textview= view.findViewById(R.id.user_count_textview);
 
@@ -66,7 +74,7 @@ public class UserViewFragment extends Fragment {
 
                 userAdapter adapter = new userAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
-
+                dialog.dismiss();
             }
 
             @Override
