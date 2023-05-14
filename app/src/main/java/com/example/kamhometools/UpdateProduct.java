@@ -10,12 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,7 +30,6 @@ public class UpdateProduct extends AppCompatActivity {
     TextInputEditText productname, product_description, priceCatalog;
     DatabaseReference root = FirebaseDatabase.getInstance().getReference("PostProducts");
     public static final int RESULT_OK = -1;
-    StorageReference reference = FirebaseStorage.getInstance().getReference();
 
     public UpdateProduct() {
     }
@@ -83,14 +79,17 @@ public class UpdateProduct extends AppCompatActivity {
 
                 if (!updatedName.isEmpty()) {
                     updateMap.put("productName", updatedName);
+                    root.child(ProductID).updateChildren(updateMap);
                 }
                 if (!updatedPrice.isEmpty()) {
                     updateMap.put("priceCatalog", updatedPrice);
+                    root.child(ProductID).updateChildren(updateMap);
                 }
                 if (!updatedDescription.isEmpty()) {
                     updateMap.put("productDescription", updatedDescription);
+                    root.child(ProductID).updateChildren(updateMap);
                 }
-                if (image1Uri != null || image2Uri != null || image3Uri != null) {
+                if (image1.getDrawable() != null || image2.getDrawable() != null || image3.getDrawable() != null) {
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
                     if (image1Uri != null) {
@@ -99,8 +98,11 @@ public class UpdateProduct extends AppCompatActivity {
                         fileRef.putFile(image1Uri).addOnSuccessListener(taskSnapshot -> {
                             fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 updateMap.put("image1Url", uri.toString());
+                                root.child(ProductID).updateChildren(updateMap);
                             });
                         });
+                    }else{
+                        Toast.makeText(UpdateProduct.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
 
                     if (image2Uri != null) {
@@ -109,8 +111,11 @@ public class UpdateProduct extends AppCompatActivity {
                         fileRef.putFile(image2Uri).addOnSuccessListener(taskSnapshot -> {
                             fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 updateMap.put("image2Url", uri.toString());
+                                root.child(ProductID).updateChildren(updateMap);
                             });
                         });
+                    }else{
+                        Toast.makeText(UpdateProduct.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
 
                     if (image3Uri != null) {
@@ -119,24 +124,16 @@ public class UpdateProduct extends AppCompatActivity {
                         fileRef.putFile(image3Uri).addOnSuccessListener(taskSnapshot -> {
                             fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 updateMap.put("image3Url", uri.toString());
+                                root.child(ProductID).updateChildren(updateMap);
                             });
                         });
+                    }else{
+                        Toast.makeText(UpdateProduct.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 else {
-                    // Update the product with the new values
-                    root.child(ProductID).updateChildren(updateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(UpdateProduct.this, "Product updated successfully", Toast.LENGTH_SHORT).show();
-                                finish(); // Finish the activity
-                            } else {
-                                Toast.makeText(UpdateProduct.this, "Failed to update product", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    Toast.makeText(UpdateProduct.this, "Image null", Toast.LENGTH_SHORT).show();
                 }
             }
         });

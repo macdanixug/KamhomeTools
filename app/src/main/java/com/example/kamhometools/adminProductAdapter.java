@@ -112,6 +112,9 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                items.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, items.size());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -124,6 +127,9 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                items.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, items.size());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -136,6 +142,9 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                items.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, items.size());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
