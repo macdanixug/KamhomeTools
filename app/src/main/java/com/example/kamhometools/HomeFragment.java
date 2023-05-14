@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HomeFragment extends Fragment {
 
@@ -77,11 +79,19 @@ public class HomeFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PostProducts object = snapshot.getValue(PostProducts.class);
                     list.add(object);
                 }
+
+                Collections.sort(list, new Comparator<PostProducts>(){
+                    @Override
+                    public int compare(PostProducts p1, PostProducts p2){
+                        return p1.getProductName().compareToIgnoreCase(p2.getProductName());
+                    }
+                });
 
                 productAdapter adapter = new productAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
