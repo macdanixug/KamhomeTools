@@ -15,15 +15,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -82,88 +79,54 @@ public class UpdateProduct extends AppCompatActivity {
                 String updatedPrice = priceCatalog.getText().toString().trim();
 
                 // Create a map to hold the updated fields
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> updateMap = new HashMap<>();
 
                 if (!updatedName.isEmpty()) {
-                    map.put("productName", updatedName);
+                    updateMap.put("productName", updatedName);
                 }
                 if (!updatedPrice.isEmpty()) {
-                    map.put("priceCatalog", updatedPrice);
+                    updateMap.put("priceCatalog", updatedPrice);
                 }
                 if (!updatedDescription.isEmpty()) {
-                    map.put("productDescription", updatedDescription);
+                    updateMap.put("productDescription", updatedDescription);
                 }
                 if (image1Uri != null || image2Uri != null || image3Uri != null) {
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
                     if (image1Uri != null) {
-                        StorageReference storageRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(image1Uri));
-                        storageRef.putFile(image1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get the new image URL from Firebase Storage
-                                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String updatedImageURL = uri.toString();
-                                        map.put("image1Uri", updatedImageURL);
-                                        root.child(ProductID).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(UpdateProduct.this, "Product updated successfully", Toast.LENGTH_SHORT).show();
-                                                    finish(); // Finish the activity
-                                                } else {
-                                                    Toast.makeText(UpdateProduct.this, "Failed to update product", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(UpdateProduct.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                            }
+                        String fileName = System.currentTimeMillis() + "." + getFileExtension(image1Uri);
+                        StorageReference fileRef = storageRef.child(fileName);
+                        fileRef.putFile(image1Uri).addOnSuccessListener(taskSnapshot -> {
+                            fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                updateMap.put("image1Url", uri.toString());
+                            });
                         });
                     }
 
                     if (image2Uri != null) {
-                        StorageReference storageRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(image2Uri));
-                        storageRef.putFile(image2Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get the new image URL from Firebase Storage
-                                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String updatedImageURL = uri.toString();
-                                        map.put("image2Uri", updatedImageURL);
-
-                                        root.child(ProductID).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(UpdateProduct.this, "Product updated successfully", Toast.LENGTH_SHORT).show();
-                                                    finish(); // Finish the activity
-                                                } else {
-                                                    Toast.makeText(UpdateProduct.this, "Failed to update product", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(UpdateProduct.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                            }
+                        String fileName = System.currentTimeMillis() + "." + getFileExtension(image2Uri);
+                        StorageReference fileRef = storageRef.child(fileName);
+                        fileRef.putFile(image2Uri).addOnSuccessListener(taskSnapshot -> {
+                            fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                updateMap.put("image2Url", uri.toString());
+                            });
                         });
                     }
+
+                    if (image3Uri != null) {
+                        String fileName = System.currentTimeMillis() + "." + getFileExtension(image3Uri);
+                        StorageReference fileRef = storageRef.child(fileName);
+                        fileRef.putFile(image3Uri).addOnSuccessListener(taskSnapshot -> {
+                            fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                updateMap.put("image3Url", uri.toString());
+                            });
+                        });
+                    }
+
                 }
                 else {
                     // Update the product with the new values
-                    root.child(ProductID).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    root.child(ProductID).updateChildren(updateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -177,10 +140,7 @@ public class UpdateProduct extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
     private String getFileExtension (Uri mUri){
 
         ContentResolver cr = this.getContentResolver();

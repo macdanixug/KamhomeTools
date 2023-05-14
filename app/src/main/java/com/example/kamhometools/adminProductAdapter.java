@@ -100,22 +100,46 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String productId = items.get(position).getId();
-                        String imageUrl = items.get(position).getImage1Url();
+                        String imageUrl1 = items.get(position).getImage1Url();
                         String imageUrl2 = items.get(position).getImage2Url();
                         String imageUrl3 = items.get(position).getImage3Url();
 
                         productsRef.child(productId).removeValue();
-                        StorageReference imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
-                        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        StorageReference imageRef1 = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl1);
+                        StorageReference imageRef2 = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl2);
+                        StorageReference imageRef3 = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl3);
+                        imageRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                // File deleted successfully
                                 Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                // An error occurred while deleting the file
+                                Toast.makeText(context, "Failed to Delete Product", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        imageRef2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(context, "Failed to Delete Product", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        imageRef3.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(context, "Product Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
                                 Toast.makeText(context, "Failed to Delete Product", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -130,6 +154,7 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                 delete.show();
             }
         });
+
 
     }
     @Override
