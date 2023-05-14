@@ -47,15 +47,15 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
         PostProducts model = list.get(position);
         holder.productName.setText(model.getProductName());
         holder.priceCatalog.setText("UGX " + model.getPriceCatalog());
-        String imageUri;
-        imageUri = model.getImageUri();
-        Picasso.get().load(imageUri).into(holder.image1);
+        String image1Uri;
+        image1Uri = model.getImage1Url();
+        Picasso.get().load(image1Uri).into(holder.image1);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductDetailFragment(model.getProductName(),model.getPriceCatalog(),model.getProductDescription(),model.getImageUri())).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductDetailFragment(model.getProductName(),model.getPriceCatalog(),model.getProductDescription(),model.getImage1Url(), model.getImage2Url(),model.getImage3Url())).addToBackStack(null).commit();
             }
         });
     }
