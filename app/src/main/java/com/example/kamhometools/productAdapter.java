@@ -1,6 +1,7 @@
 package com.example.kamhometools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -51,11 +51,23 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.myViewHo
         image1Uri = model.getImage1Url();
         Picasso.get().load(image1Uri).into(holder.image1);
 
+        String image2Uri = model.getImage2Url();
+        String image3Uri = model.getImage3Url();
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductDetailFragment(model.getProductName(),model.getPriceCatalog(),model.getProductDescription(),model.getImage1Url(), model.getImage2Url(),model.getImage3Url())).addToBackStack(null).commit();
+//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductDetailFragment(model.getProductName(),model.getPriceCatalog(),model.getProductDescription(),model.getImage1Url(), model.getImage2Url(),model.getImage3Url())).addToBackStack(null).commit();
+                Intent intent = new Intent(context, ProductDetail.class);
+                // Put the title, image URL, and message of the clicked item as extras in the intent
+                intent.putExtra("productName", model.getProductName());
+                intent.putExtra("priceCatalog", "UGX " +model.getPriceCatalog());
+                intent.putExtra("productDescription", model.getProductDescription());
+                intent.putExtra("image1Url", image1Uri);
+                intent.putExtra("image2Url", image2Uri);
+                intent.putExtra("image3Url", image3Uri);
+                context.startActivity(intent);
             }
         });
     }

@@ -62,7 +62,7 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                  Intent intent = new Intent(context, AdminViewProducts.class);
                 // Put the title, image URL, and message of the clicked item as extras in the intent
                 intent.putExtra("productName", model.getProductName());
-                intent.putExtra("priceCatalog", model.getPriceCatalog());
+                intent.putExtra("priceCatalog", "UGX " +model.getPriceCatalog());
                 intent.putExtra("productDescription", model.getProductDescription());
                 intent.putExtra("image1Url", image1Uri);
                 intent.putExtra("image2Url", image2Uri);
