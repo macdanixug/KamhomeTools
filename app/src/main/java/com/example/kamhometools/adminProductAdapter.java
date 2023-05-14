@@ -50,7 +50,11 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
         PostProducts model = items.get(position);
         holder.productName.setText(items.get(position).getProductName());
         holder.priceCatalog.setText("UGX " + items.get(position).getPriceCatalog());
-        Picasso.get().load(items.get(position).getImageUri()).into(holder.image1);
+        Picasso.get().load(items.get(position).getImage1Url()).into(holder.image1);
+
+        String image1Uri = model.getImage1Url();
+        String image2Uri = model.getImage2Url();
+        String image3Uri = model.getImage3Url();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +64,9 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                 intent.putExtra("productName", model.getProductName());
                 intent.putExtra("priceCatalog", model.getPriceCatalog());
                 intent.putExtra("productDescription", model.getProductDescription());
-                intent.putExtra("imageUri", model.getImageUri());
+                intent.putExtra("image1Url", image1Uri);
+                intent.putExtra("image2Url", image2Uri);
+                intent.putExtra("image3Url", image3Uri);
                 context.startActivity(intent);
             }
         });
@@ -70,7 +76,6 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                 String productName = model.getProductName();
                 String priceCatalog = model.getPriceCatalog();
                 String productDescription = model.getProductDescription();
-                String imageUrl = model.getImageUri();
                 String ProductID = model.getId();
 
                 Intent intent = new Intent(context, UpdateProduct.class);
@@ -78,7 +83,9 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                 intent.putExtra("productName", productName);
                 intent.putExtra("priceCatalog", priceCatalog);
                 intent.putExtra("productDescription", productDescription);
-                intent.putExtra("imageUri", imageUrl);
+                intent.putExtra("image1Url", image1Uri);
+                intent.putExtra("image2Url", image2Uri);
+                intent.putExtra("image3Url", image3Uri);
                 context.startActivity(intent);
 
             }
@@ -93,7 +100,9 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String productId = items.get(position).getId();
-                        String imageUrl = items.get(position).getImageUri();
+                        String imageUrl = items.get(position).getImage1Url();
+                        String imageUrl2 = items.get(position).getImage2Url();
+                        String imageUrl3 = items.get(position).getImage3Url();
 
                         productsRef.child(productId).removeValue();
                         StorageReference imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
@@ -129,7 +138,7 @@ public class adminProductAdapter extends RecyclerView.Adapter<adminProductAdapte
     }
     static  class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView productName, productDescription, priceCatalog;
-        ImageView image1;
+        ImageView image1,image2,image3;
         private Button deleteBtn, updateBtn;
 
         public MyViewHolder(@NonNull View itemView) {

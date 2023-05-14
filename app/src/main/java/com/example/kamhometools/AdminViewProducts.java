@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 public class AdminViewProducts extends AppCompatActivity {
 
-    String productName, productDescription, priceCatalog, imageUri;
+    String productName, productDescription, priceCatalog, image1Url,image2Url,image3Url;
     Button product_name_textview;
     ImageView image1,image2,image3;
     TextView product_price_textview, description;
@@ -21,11 +21,13 @@ public class AdminViewProducts extends AppCompatActivity {
         // Required empty public constructor
     }
 
-    public AdminViewProducts(String productName, String priceCatalog, String productDescription, String imageUri){
+    public AdminViewProducts(String productName, String productDescription, String priceCatalog, String image1Url, String image2Url, String image3Url){
         this.productName = productName;
-        this.priceCatalog = priceCatalog;
         this.productDescription = productDescription;
-        this.imageUri = imageUri;
+        this.priceCatalog = priceCatalog;
+        this.image1Url = image1Url;
+        this.image2Url = image2Url;
+        this.image3Url = image3Url;
     }
 
     @Override
@@ -36,7 +38,9 @@ public class AdminViewProducts extends AppCompatActivity {
         String productName = getIntent().getStringExtra("productName");
         String priceCatalog = getIntent().getStringExtra("priceCatalog");
         String productDescription = getIntent().getStringExtra("productDescription");
-        String imageUrl = getIntent().getStringExtra("imageUri");
+        String imageUrl1 = getIntent().getStringExtra("image1Url");
+        String imageUrl2 = getIntent().getStringExtra("image2Url");
+        String imageUrl3 = getIntent().getStringExtra("image3Url");
 
         product_name_textview = findViewById(R.id.product_name_textview);
         product_price_textview = findViewById(R.id.product_price_textview);
@@ -45,14 +49,12 @@ public class AdminViewProducts extends AppCompatActivity {
         image2 = findViewById(R.id.image2);
         image3 = findViewById(R.id.image3);
 
-
         product_name_textview.setText(productName);
         product_price_textview.setText(priceCatalog);
         description.setText(productDescription);
-        Picasso.get().load(imageUrl).into(image1);
-        Picasso.get().load(imageUrl).into(image2);
-        Picasso.get().load(imageUrl).into(image3);
-
+        Picasso.get().load(imageUrl1).into(image1);
+        Picasso.get().load(imageUrl2).into(image2);
+        Picasso.get().load(imageUrl3).into(image3);
 
     }
 

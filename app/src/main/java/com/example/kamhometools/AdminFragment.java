@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -36,7 +35,7 @@ public class AdminFragment extends Fragment {
     private ProgressBar progressupload;
     private ImageView image1, image2, image3;
     private ProgressDialog progressDialog;
-    private Uri imageUri;
+    private Uri image1Uri, image2Uri, image3Uri;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private TextInputEditText productname, product_description, priceCatalog;
@@ -67,15 +66,12 @@ public class AdminFragment extends Fragment {
         priceCatalog = view.findViewById(R.id.priceCatalog);
         submit = view.findViewById(R.id.submit);
         progressDialog = new ProgressDialog(getActivity());
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadpost();
             }
         });
-
         return view;
     }
 
@@ -85,8 +81,6 @@ public class AdminFragment extends Fragment {
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, requestCode);
     }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -95,17 +89,19 @@ public class AdminFragment extends Fragment {
             switch (requestCode){
                 case 2:
                     image1.setImageURI(imageUri);
+                    image1Uri = imageUri;
                     break;
                 case 3:
                     image2.setImageURI(imageUri);
+                    image2Uri = imageUri;
                     break;
                 case 4:
                     image3.setImageURI(imageUri);
+                    image3Uri = imageUri;
                     break;
             }
         }
     }
-
 
     private void uploadpost () {
         String pName = productname.getText().toString().trim();
@@ -128,60 +124,81 @@ public class AdminFragment extends Fragment {
                 priceCatalog.requestFocus();
                 return;
             }
-            UploadToFirebase(imageUri);
+            UploadToFirebase(image1Uri, image2Uri, image3Uri);
         } else {
             Toast.makeText(getActivity(), "Please Select Image", Toast.LENGTH_LONG)
                     .show();
         }
     }
 
-    private void UploadToFirebase (Uri uri){
-        // if (currentUser != null) {
-//            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-//                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-        progressDialog.setTitle("UPLOADING .. .. ..");
-        progressDialog.setMessage("Please wait....");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-        final StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String pName = productname.getText().toString().trim();
-                        String pDescription = product_description.getText().toString().trim();
-                        String pPriceCatalog = priceCatalog.getText().toString().trim();
-                        String productId = root.push().getKey();
-                        PostProducts model = new PostProducts(productId, pName, pDescription, pPriceCatalog, uri.toString());
-                        root.child(productId).setValue(model);
-                        progressDialog.dismiss();
-                        productname.getText().clear();
-                        product_description.getText().clear();
-                        priceCatalog.getText().clear();
-                        image1.setImageResource(R.drawable.upload);product_description.getText().toString();
-                        Toast.makeText(getActivity(), "Upload Sucessful", Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressDialog.show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(getActivity(), "Upload Failed", Toast.LENGTH_LONG)
-                        .show();
+    private void UploadToFirebase(Uri image1Uri, Uri image2Uri, Uri image3Uri) {
 
-            }
-        });
+        if(image1Uri == null || image2Uri ==null || image3Uri ==null){
+            Toast.makeText(getActivity(), "Please select the image", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            progressDialog.setTitle("UPLOADING .. .. ..");
+            progressDialog.setMessage("Please wait....");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            final StorageReference fileRef1 = reference.child(System.currentTimeMillis() + "_image1." + getFileExtension(image1Uri));
+            final StorageReference fileRef2 = reference.child(System.currentTimeMillis() + "_image2." + getFileExtension(image2Uri));
+            final StorageReference fileRef3 = reference.child(System.currentTimeMillis() + "_image3." + getFileExtension(image3Uri));
 
+            fileRef1.putFile(image1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    fileRef1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri1) {
+                            fileRef2.putFile(image2Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    fileRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri2) {
+                                            fileRef3.putFile(image3Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    fileRef3.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri uri3) {
+                                                            String pName = productname.getText().toString().trim();
+                                                            String pDescription = product_description.getText().toString().trim();
+                                                            String pPriceCatalog = priceCatalog.getText().toString().trim();
+                                                            String productId = root.push().getKey();
+                                                            PostProducts model = new PostProducts(productId, pName, pDescription, pPriceCatalog, uri1.toString(), uri2.toString(), uri3.toString());
+                                                            root.child(productId).setValue(model);
+                                                            progressDialog.dismiss();
+                                                            productname.getText().clear();
+                                                            product_description.getText().clear();
+                                                            priceCatalog.getText().clear();
+                                                            image1.setImageResource(R.drawable.upload);
+                                                            image2.setImageResource(R.drawable.upload);
+                                                            image3.setImageResource(R.drawable.upload);
+
+                                                            Toast.makeText(getActivity(), "Upload Successful...", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
+
     private String getFileExtension (Uri mUri){
 
         ContentResolver cr = getActivity().getContentResolver();

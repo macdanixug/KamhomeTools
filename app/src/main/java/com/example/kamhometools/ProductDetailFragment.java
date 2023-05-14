@@ -24,18 +24,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class ProductDetailFragment extends Fragment {
-    String productName, productDescription, priceCatalog, imageUri;
+    String productName, productDescription, priceCatalog, image1Url, image2Url, image3Url;
     Button product_name_textview, call_button, message_button, add_cart_button, place_order_button;
     ImageView image1,image2,image3;
     TextView product_price_textview, description;
     public ProductDetailFragment(){
 
     }
-    public ProductDetailFragment(String productName, String priceCatalog, String productDescription, String imageUri){
+    public ProductDetailFragment(String productName, String productDescription, String priceCatalog, String image1Url, String image2Url, String image3Url){
         this.productName = productName;
-        this.priceCatalog = priceCatalog;
         this.productDescription = productDescription;
-        this.imageUri = imageUri;
+        this.priceCatalog = priceCatalog;
+        this.image1Url = image1Url;
+        this.image2Url = image2Url;
+        this.image3Url = image3Url;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,9 +60,9 @@ public class ProductDetailFragment extends Fragment {
         product_name_textview.setText(productName);
         description.setText(productDescription);
         product_price_textview.setText("UGX " + priceCatalog);
-        Picasso.get().load(imageUri).into(image1);
-        Picasso.get().load(imageUri).into(image2);
-        Picasso.get().load(imageUri).into(image3);
+        Picasso.get().load(image1Url).into(image1);
+        Picasso.get().load(image2Url).into(image2);
+        Picasso.get().load(image3Url).into(image3);
 
         call_button.setOnClickListener(new View.OnClickListener() {
             @Override
