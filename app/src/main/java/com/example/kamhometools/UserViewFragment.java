@@ -58,11 +58,10 @@ public class UserViewFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 int numUsers = 0;
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String userRole = dataSnapshot.child("role").getValue(String.class);
-
                     HelperClass object = snapshot.getValue(HelperClass.class);
                     if(object.getRole().equals("User")){
                         numUsers++;
