@@ -39,19 +39,19 @@
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".UserMainPage"
             android:exported="false" />
         <activity
-            android:name=".Signup"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".AdminMainPage"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.KamhomeTools">
             <intent-filter>

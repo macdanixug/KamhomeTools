@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -56,15 +57,20 @@ public class BlogsManagementFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
+                int blogCount = 0;
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BlogModel object = snapshot.getValue(BlogModel.class);
                     list.add(object);
+                    blogCount++;
                 }
 
                 adminBlogAdapter adapter = new adminBlogAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
                 dialog.dismiss();
+
+                TextView user_count_textview = getView().findViewById(R.id.user_count_textview);
+                user_count_textview.setText(String.valueOf(blogCount));
 
             }
 

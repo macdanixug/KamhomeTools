@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -56,14 +57,19 @@ public class ProductManagementFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
+                int productCount = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PostProducts object = snapshot.getValue(PostProducts.class);
                     list.add(object);
+                    productCount++;
                 }
 
                 adminProductAdapter adapter = new adminProductAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
                 dialog.dismiss();
+
+                TextView user_count_textview = getView().findViewById(R.id.user_count_textview);
+                user_count_textview.setText(String.valueOf(productCount));
 
             }
 
