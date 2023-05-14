@@ -98,20 +98,18 @@
             android:orientation="horizontal"
             android:layout_margin="10dp"
             android:baselineAligned="false"
-            android:layout_marginTop="40dp"
             android:padding="8dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/image1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_margin="5dp"
                 android:src="@drawable/upload"
                 android:scaleType="centerCrop"/>
 
@@ -119,6 +117,7 @@
                 android:id="@+id/image2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_margin="5dp"
                 android:src="@drawable/upload"
                 android:scaleType="centerCrop"/>
 
@@ -126,6 +125,7 @@
                 android:id="@+id/image3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_margin="5dp"
                 android:src="@drawable/upload"
                 android:scaleType="centerCrop"/>
 

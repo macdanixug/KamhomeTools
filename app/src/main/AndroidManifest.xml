@@ -39,7 +39,7 @@
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".AdminMainPage"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".UserMainPage"
@@ -51,7 +51,7 @@
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".AdminMainPage"
             android:exported="true"
             android:theme="@style/Theme.KamhomeTools">
             <intent-filter>

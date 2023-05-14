@@ -59,7 +59,9 @@ public class AdminFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         currentUser = mAuth.getCurrentUser();
-        image1.setOnClickListener(v -> chooseimg());
+        image1.setOnClickListener(v -> chooseimg(2));
+        image2.setOnClickListener(v -> chooseimg(3));
+        image3.setOnClickListener(v -> chooseimg(4));
         productname = view.findViewById(R.id.productname);
         product_description = view.findViewById(R.id.product_description);
         priceCatalog = view.findViewById(R.id.priceCatalog);
@@ -77,22 +79,30 @@ public class AdminFragment extends Fragment {
         return view;
     }
 
-    private void chooseimg() {
+    private void chooseimg(int requestCode) {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, 2);
+        startActivityForResult(galleryIntent, requestCode);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
-            imageUri = data.getData();
-            image1.setImageURI(imageUri);
-//            image2.setImageURI(imageUri);
-//            image3.setImageURI(imageUri);
+        if (resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            switch (requestCode){
+                case 2:
+                    image1.setImageURI(imageUri);
+                    break;
+                case 3:
+                    image2.setImageURI(imageUri);
+                    break;
+                case 4:
+                    image3.setImageURI(imageUri);
+                    break;
+            }
         }
     }
 
@@ -101,7 +111,7 @@ public class AdminFragment extends Fragment {
         String pName = productname.getText().toString().trim();
         String pDescription = product_description.getText().toString().trim();
         String pPriceCatalog = priceCatalog.getText().toString().trim();
-        if (imageUri != null) {
+        if (image1.getDrawable() != null && image2.getDrawable() != null && image3.getDrawable() != null) {
 
             if (pName.isEmpty()) {
                 productname.setError("Product Name is required");
