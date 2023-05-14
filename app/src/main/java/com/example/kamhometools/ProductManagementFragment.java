@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ProductManagementFragment extends Fragment {
 
@@ -63,6 +65,13 @@ public class ProductManagementFragment extends Fragment {
                     list.add(object);
                     productCount++;
                 }
+
+                Collections.sort(list, new Comparator<PostProducts>(){
+                    @Override
+                    public int compare(PostProducts p1, PostProducts p2){
+                        return p1.getProductName().compareToIgnoreCase(p2.getProductName());
+                    }
+                });
 
                 adminProductAdapter adapter = new adminProductAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);

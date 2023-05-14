@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class UserViewFragment extends Fragment {
 
@@ -68,6 +70,13 @@ public class UserViewFragment extends Fragment {
                         list.add(object);
                     }
                 }
+
+                Collections.sort(list, new Comparator<HelperClass>(){
+                    @Override
+                    public int compare(HelperClass p1, HelperClass p2){
+                        return p1.getName().compareToIgnoreCase(p2.getName());
+                    }
+                });
 
                 user_count_textview.setText(String.valueOf(numUsers));
 

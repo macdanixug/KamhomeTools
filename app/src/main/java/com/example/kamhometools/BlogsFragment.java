@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class BlogsFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -56,6 +58,13 @@ public class BlogsFragment extends Fragment {
                     BlogModel object = snapshot.getValue(BlogModel.class);
                     list.add(object);
                 }
+
+                Collections.sort(list, new Comparator<BlogModel>(){
+                    @Override
+                    public int compare(BlogModel p1, BlogModel p2){
+                        return p1.getBlog_title().compareToIgnoreCase(p2.getBlog_title());
+                    }
+                });
 
                 blogAdapter adapter = new blogAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
