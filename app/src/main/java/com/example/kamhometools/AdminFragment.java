@@ -167,7 +167,7 @@ public class AdminFragment extends Fragment {
                                                             String pDescription = product_description.getText().toString().trim();
                                                             String pPriceCatalog = priceCatalog.getText().toString().trim();
                                                             String productId = root.push().getKey();
-                                                            PostProducts model = new PostProducts(productId, pName, pDescription, pPriceCatalog, uri1.toString(), uri2.toString(), uri3.toString());
+                                                            PostProducts model = new PostProducts(productId, pName,pPriceCatalog, pDescription , uri1.toString(), uri2.toString(), uri3.toString());
                                                             root.child(productId).setValue(model);
                                                             progressDialog.dismiss();
                                                             productname.getText().clear();

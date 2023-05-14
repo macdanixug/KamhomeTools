@@ -7,6 +7,7 @@ public class PostProducts {
     private String productDescription;
     private String image1Url, image2Url, image3Url;
 
+
     public PostProducts() {
     }
 

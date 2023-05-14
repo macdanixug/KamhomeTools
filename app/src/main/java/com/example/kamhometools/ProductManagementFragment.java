@@ -54,6 +54,7 @@ public class ProductManagementFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 // Retrieve data from dataSnapshot and add it to your RecyclerView adapter
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PostProducts object = snapshot.getValue(PostProducts.class);
