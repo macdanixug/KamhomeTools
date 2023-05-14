@@ -3,18 +3,18 @@ package com.example.kamhometools;
 public class PostProducts {
     private String id;
     private String productName;
-    private String productDescription;
     private String priceCatalog;
-    private String image1Url,image2Url,image3Url;
+    private String productDescription;
+    private String image1Url, image2Url, image3Url;
 
     public PostProducts() {
     }
 
-    public PostProducts(String id, String productName, String productDescription, String priceCatalog, String image1Url, String image2Url, String image3Url) {
+    public PostProducts(String id, String productName, String priceCatalog, String productDescription, String image1Url, String image2Url, String image3Url) {
         this.id = id;
         this.productName = productName;
-        this.productDescription = productDescription;
         this.priceCatalog = priceCatalog;
+        this.productDescription = productDescription;
         this.image1Url = image1Url;
         this.image2Url = image2Url;
         this.image3Url = image3Url;
@@ -36,20 +36,20 @@ public class PostProducts {
         this.productName = productName;
     }
 
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
-
     public String getPriceCatalog() {
         return priceCatalog;
     }
 
     public void setPriceCatalog(String priceCatalog) {
         this.priceCatalog = priceCatalog;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public String getImage1Url() {

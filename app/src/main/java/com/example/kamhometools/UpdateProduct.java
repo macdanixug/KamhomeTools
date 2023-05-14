@@ -89,7 +89,7 @@ public class UpdateProduct extends AppCompatActivity {
                     updateMap.put("productDescription", updatedDescription);
                     root.child(ProductID).updateChildren(updateMap);
                 }
-                if (image1.getDrawable() != null || image2.getDrawable() != null || image3.getDrawable() != null) {
+                if (image1Uri == null || image2Uri ==null || image3Uri ==null) {
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
                     if (image1Uri != null) {
@@ -101,8 +101,8 @@ public class UpdateProduct extends AppCompatActivity {
                                 root.child(ProductID).updateChildren(updateMap);
                             });
                         });
-                    }else{
-                        Toast.makeText(UpdateProduct.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }else if(image1.getDrawable() != null){
+                        Toast.makeText(UpdateProduct.this, "Product Updated Successful", Toast.LENGTH_SHORT).show();
                     }
 
                     if (image2Uri != null) {
@@ -114,8 +114,8 @@ public class UpdateProduct extends AppCompatActivity {
                                 root.child(ProductID).updateChildren(updateMap);
                             });
                         });
-                    }else{
-                        Toast.makeText(UpdateProduct.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }else if(image2.getDrawable() != null){
+                        Toast.makeText(UpdateProduct.this, "Product Updated Successful", Toast.LENGTH_SHORT).show();
                     }
 
                     if (image3Uri != null) {
@@ -127,13 +127,13 @@ public class UpdateProduct extends AppCompatActivity {
                                 root.child(ProductID).updateChildren(updateMap);
                             });
                         });
-                    }else{
-                        Toast.makeText(UpdateProduct.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }else if(image3.getDrawable() != null){
+                        Toast.makeText(UpdateProduct.this, "Product Updated Successful", Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 else {
-                    Toast.makeText(UpdateProduct.this, "Image null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateProduct.this, "Product Update failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
