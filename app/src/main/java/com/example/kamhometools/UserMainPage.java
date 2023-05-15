@@ -78,7 +78,7 @@ public class UserMainPage extends AppCompatActivity implements NavigationView.On
         }
         else{
             profileName.setText("Full name");
-            Picasso.get().load(R.drawable.ic_launcher_background).into(profilePic);
+            profilePic.setImageResource(R.drawable.ic_launcher_background);
         }
 
 

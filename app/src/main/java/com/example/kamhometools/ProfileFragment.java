@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
             mNameTextView.setText("Full name");
             mEmailTextView.setText("Email");
             mPhoneTextView.setText("Contact");
-            Picasso.get().load(R.drawable.ic_launcher_background).into(profileImage);
+            profileImage.setImageResource(R.drawable.ic_launcher_background);
         }
 
         mUpdateButton.setOnClickListener(new View.OnClickListener() {

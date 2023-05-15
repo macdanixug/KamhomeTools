@@ -81,7 +81,7 @@ public class AdminMainPage extends AppCompatActivity implements NavigationView.O
         }
         else{
             profileName.setText("Full name");
-            Picasso.get().load(R.drawable.ic_launcher_background).into(profilePic);
+            profilePic.setImageResource(R.drawable.ic_launcher_background);
         }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_menu,
